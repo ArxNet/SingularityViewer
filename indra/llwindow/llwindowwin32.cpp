@@ -163,7 +163,6 @@ LLWinImm::LLWinImm() : mHImmDll(NULL)
 	// Check system metrics 
 	if ( !GetSystemMetrics( SM_DBCSENABLED ) )
 		return;
-	
 
 	mHImmDll = LoadLibraryA("Imm32");
 	if (mHImmDll != NULL)

@@ -34,6 +34,7 @@
 #define LL_LLVIEWERMENU_H
 
 #include "llmenugl.h"
+#include "llsafehandle.h"
 
 class LLUICtrl;
 class LLView;

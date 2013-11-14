@@ -29,7 +29,7 @@
 #define LL_LLMARKETPLACENOTIFICATIONS_H
 
 
-#include <llsd.h>
+#include "llsd.h"
 #include <boost/function.hpp>
 
 

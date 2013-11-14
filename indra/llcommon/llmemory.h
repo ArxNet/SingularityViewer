@@ -662,10 +662,15 @@ void  LLPrivateMemoryPoolTester::operator delete[](void* addr)
 }
 #endif
 #endif
+// LLRefCount moved to llrefcount.h
 
-//EVENTUALLY REMOVE THESE:
-#include "llpointer.h"
-#include "llsingleton.h"
-#include "llsafehandle.h"
+// LLPointer moved to llpointer.h
+
+// LLSafeHandle moved to llsafehandle.h
+
+// LLSingleton moved to llsingleton.h
+
+
+
 
 #endif

@@ -51,6 +51,7 @@
 
 #include "stdtypes.h"		// U16, S32, U32, F64
 #include "llatomic.h"		// LLAtomicU32
+#include "llpointer.h"
 #include "aithreadsafe.h"
 #include "aicurlperservice.h"	// AIPerServicePtr
 

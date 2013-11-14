@@ -34,9 +34,6 @@
 #include "llsd.h"
 
 class LLSplashScreen;
-
-class LLWindow;
-
 class LLPreeditor;
 class LLWindowCallbacks;
 

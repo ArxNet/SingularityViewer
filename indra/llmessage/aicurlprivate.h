@@ -34,6 +34,7 @@
 #include <sstream>
 #include "llatomic.h"
 #include "llrefcount.h"
+#include "llpointer.h"
 #include "aicurlperservice.h"
 #include "aihttptimeout.h"
 #include "llhttpclient.h"

@@ -34,6 +34,7 @@
 #define LL_POSTPROCESS_H
 
 #include <map>
+#include "llsingleton.h"
 #include "llsd.h"
 #include "llrendertarget.h"
 

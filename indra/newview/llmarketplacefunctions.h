@@ -29,10 +29,10 @@
 #define LL_LLMARKETPLACEFUNCTIONS_H
 
 
-#include <llsd.h>
 #include <boost/function.hpp>
 #include <boost/signals2.hpp>
 
+#include "llsd.h"
 #include "llsingleton.h"
 #include "llstring.h"
 #include "llhttpstatuscodes.h"

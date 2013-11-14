@@ -36,6 +36,7 @@
 #include "lluuid.h"
 #include "llfloater.h"
 #include "lllslconstants.h"
+#include "llsafehandle.h"
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Class LLFloaterPay
