@@ -92,7 +92,6 @@
 #include "llviewercontrol.h"
 #include "llvfs.h"
 #include "llxorcipher.h"	// saved password, MAC address
-#include "imageids.h"
 #include "message.h"
 #include "v3math.h"
 

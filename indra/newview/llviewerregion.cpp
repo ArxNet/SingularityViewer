@@ -79,7 +79,6 @@
 #include "llviewercontrol.h"
 #include "llsdserialize.h"
 
-#include "llviewerparcelmgr.h"	//Aurora Sim
 #ifdef LL_WINDOWS
 	#pragma warning(disable:4355)
 #endif
@@ -97,6 +96,7 @@ const S16 MAX_MAP_DIST = 10;
 const S32 MAX_SEED_CAP_ATTEMPTS_BEFORE_LOGIN = 3;
 // Even though we gave up on login, keep trying for caps after we are logged in:
 const S32 MAX_CAP_REQUEST_ATTEMPTS = 30;
+const U32 DEFAULT_MAX_REGION_WIDE_PRIM_COUNT = 15000;
 
 typedef std::map<std::string, std::string> CapabilityMap;
 

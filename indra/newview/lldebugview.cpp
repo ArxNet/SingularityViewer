@@ -41,7 +41,6 @@
 #include "lltextureview.h"
 #include "aihttpview.h"
 #include "llresmgr.h"
-#include "imageids.h"
 #include "llvelocitybar.h"
 #include "llviewerwindow.h"
 #include "llfloaterstats.h"

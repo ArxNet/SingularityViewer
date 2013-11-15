@@ -68,7 +68,7 @@
 #include "llviewercontrol.h"
 #include "lluictrlfactory.h"
 #include "lltrans.h"
-
+#include "llavataractions.h"
 #include "lltransfertargetfile.h"
 #include "lltransfersourcefile.h"
 

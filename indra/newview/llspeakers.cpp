@@ -956,7 +956,7 @@ void LLLocalSpeakerMgr::updateSpeakerList()
 		if (speakerp->mStatus == LLSpeaker::STATUS_TEXT_ONLY)
 		{
 			LLVOAvatar* avatarp = gObjectList.findAvatar(speaker_id);
-			if (!avatarp || dist_vec_squared(avatarp->getPositionAgent(), gAgent.getPositionAgent()) > CHAT_NORMAL_RADIUS_SQUARED)
+			if (!avatarp || dist_vec_squared(avatarp->getPositionAgent(), gAgent.getPositionAgent()) > CHAT_NORMAL_RADIUS * CHAT_NORMAL_RADIUS)
 			{
 				setSpeakerNotInChannel(speakerp);
 			}

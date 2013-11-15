@@ -50,7 +50,6 @@
 #include "lluixmltags.h"
 #include "llviewquery.h"
 #include "llxmlnode.h"
-#include "stdenums.h"
 #include "lluistring.h"
 #include "llcursortypes.h"
 #include "llinitparam.h"

@@ -21,7 +21,6 @@ set(llcommon_SOURCE_FILES
     aifile.cpp
     aiframetimer.cpp
     aithreadid.cpp
-    imageids.cpp
     indra_constants.cpp
     llallocator.cpp
     llallocator_heap_profile.cpp
@@ -105,11 +104,9 @@ set(llcommon_HEADER_FILES
     aithreadid.h
     aithreadsafe.h
     ctype_workaround.h
-    imageids.h
     indra_constants.h
     linden_common.h
     llalignedarray.h
-    llagentconstants.h
     llallocator.h
     llallocator_heap_profile.h
     llapp.h
@@ -117,12 +114,10 @@ set(llcommon_HEADER_FILES
     llaprpool.h
     llassettype.h
     llatomic.h
-    llavatarconstants.h
     llbase32.h
     llbase64.h
     llbitpack.h
     llboost.h
-    llclickaction.h
     llcommon.h
     llcommonutils.h
     llcoros.h
@@ -211,8 +206,6 @@ set(llcommon_HEADER_FILES
     sguuidhash.h
     llversionviewer.h.in
     llworkerthread.h
-    roles_constants.h
-    stdenums.h
     stdtypes.h
     stringize.h
     timer.h

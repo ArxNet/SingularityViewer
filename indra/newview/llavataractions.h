@@ -27,8 +27,19 @@
 #ifndef LL_LLAVATARACTIONS_H
 #define LL_LLAVATARACTIONS_H
 
+#include "llsd.h"
+#include "lluuid.h"
+
+#include <string>
+#include <vector>
+
 class LLAvatarName;
 class LLFloater;
+
+// Flags for kick message
+const U32 KICK_FLAGS_DEFAULT	= 0x0;
+const U32 KICK_FLAGS_FREEZE		= 1 << 0;
+const U32 KICK_FLAGS_UNFREEZE	= 1 << 1;
 
 /**
  * Friend-related actions (add, remove, offer teleport, etc)

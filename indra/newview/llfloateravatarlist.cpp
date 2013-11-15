@@ -16,7 +16,6 @@
 
 #include "llviewerprecompiledheaders.h"
 
-#include "llavatarconstants.h"
 #include "llavatarnamecache.h"
 #include "llfloateravatarlist.h"
 

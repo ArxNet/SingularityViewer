@@ -34,7 +34,6 @@
 
 #include "llvograss.h"
 
-#include "imageids.h"
 #include "llviewercontrol.h"
 
 #include "llagentcamera.h"

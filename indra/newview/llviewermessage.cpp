@@ -172,6 +172,11 @@ LLFrameTimer gThrottleTimer;
 const U32 OFFER_THROTTLE_MAX_COUNT=5; //number of items per time period
 const F32 OFFER_THROTTLE_TIME=10.f; //time period in seconds
 
+// Agent Update Flags (U8)
+const U8 AU_FLAGS_NONE      		= 0x00;
+const U8 AU_FLAGS_HIDETITLE      	= 0x01;
+const U8 AU_FLAGS_CLIENT_AUTOPILOT	= 0x02;
+
 //script permissions
 const std::string SCRIPT_QUESTIONS[SCRIPT_PERMISSION_EOF] = 
 {

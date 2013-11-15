@@ -71,6 +71,7 @@
 #include "llmeshrepository.h"
 #include "llmutelist.h"
 #include "llnotificationsutil.h"
+#include "llphysicsshapebuilderutil.h"
 #include "llquantize.h"
 #include "llrand.h"
 #include "llregionhandle.h"

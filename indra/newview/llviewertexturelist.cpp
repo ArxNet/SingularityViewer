@@ -37,7 +37,6 @@
 
 #include "llviewertexturelist.h"
 
-#include "imageids.h"
 #include "llgl.h" // fot gathering stats from GL
 #include "llimagegl.h"
 #include "llimagebmp.h"

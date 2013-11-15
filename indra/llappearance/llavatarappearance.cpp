@@ -35,7 +35,7 @@
 #include "llavatarappearance.h"
 #include "llavatarappearancedefines.h"
 #include "llavatarjointmesh.h"
-#include "imageids.h"
+#include "llstl.h"
 #include "lldir.h"
 #include "lldeleteutils.h"
 #include "llpolymorph.h"

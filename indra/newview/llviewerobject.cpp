@@ -29,7 +29,6 @@
 #include "llviewerobject.h"
 
 #include "llaudioengine.h"
-#include "imageids.h"
 #include "indra_constants.h"
 #include "llmath.h"
 #include "llflexibleobject.h"
@@ -122,6 +121,14 @@ BOOL		LLViewerObject::sUseSharedDrawables(FALSE); // TRUE
 F64			LLViewerObject::sMaxUpdateInterpolationTime = 3.0;		// For motion interpolation: after X seconds with no updates, don't predict object motion
 F64			LLViewerObject::sPhaseOutUpdateInterpolationTime = 2.0;	// For motion interpolation: after Y seconds with no updates, taper off motion prediction
 
+// The maximum size of an object extra parameters binary (packed) block
+#define MAX_OBJECT_PARAMS_SIZE 1024
+
+// At 45 Hz collisions seem stable and objects seem
+// to settle down at a reasonable rate.
+// JC 3/18/2003
+
+const F32 PHYSICS_TIMESTEP = 1.f / 45.f;
 
 static LLFastTimer::DeclareTimer FTM_CREATE_OBJECT("Create Object");
 

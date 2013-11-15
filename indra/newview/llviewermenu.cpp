@@ -138,6 +138,7 @@
 #include "llparcel.h"
 #include "llregioninfomodel.h"
 #include "llselectmgr.h"
+#include "llstartup.h"
 #include "llstatusbar.h"
 #include "lltextureview.h"
 #include "lltoolbar.h"

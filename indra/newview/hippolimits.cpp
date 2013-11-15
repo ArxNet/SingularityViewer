@@ -8,6 +8,9 @@
 
 #include "llviewercontrol.h"		// gSavedSettings
 
+// Default group count for fallback
+const S32 DEFAULT_MAX_AGENT_GROUPS = 25;
+
 HippoLimits *gHippoLimits = 0;
 
 

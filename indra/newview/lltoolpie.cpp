@@ -34,7 +34,6 @@
 #include "lltoolpie.h"
 
 #include "indra_constants.h"
-#include "llclickaction.h"
 #include "llparcel.h"
 
 #include "llagent.h"

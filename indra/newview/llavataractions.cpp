@@ -59,6 +59,11 @@
 #include "llviewerwindow.h"
 #include "llwindow.h"
 
+// Flags for kick message
+//const U32 KICK_FLAGS_DEFAULT	= 0x0;
+//const U32 KICK_FLAGS_FREEZE		= 1 << 0;
+//const U32 KICK_FLAGS_UNFREEZE	= 1 << 1;
+
 extern const S32 TRANS_GIFT;
 void give_money(const LLUUID& uuid, LLViewerRegion* region, S32 amount, BOOL is_group = FALSE, S32 trx_type = TRANS_GIFT, const std::string& desc = LLStringUtil::null);
 void handle_lure(const uuid_vec_t& ids);

@@ -36,7 +36,6 @@
 
 // library includes
 #include "llaudioengine.h" // For MAX_BUFFERS for debugging.
-#include "imageids.h"
 #include "llerror.h"
 #include "llviewercontrol.h"
 #include "llfasttimer.h"

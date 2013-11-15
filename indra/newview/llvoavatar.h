@@ -35,7 +35,6 @@
 
 #include <boost/signals2.hpp>
 
-#include "imageids.h"			// IMG_INVISIBLE
 #include "llavatarappearance.h"
 #include "llchat.h"
 #include "lldrawpoolalpha.h"

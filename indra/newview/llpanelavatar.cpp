@@ -34,7 +34,6 @@
 
 #include "llpanelavatar.h"
 
-#include "llavatarconstants.h"
 #include "llavatarnamecache.h"
 #include "llbutton.h"
 #include "llcheckboxctrl.h"
@@ -73,6 +72,9 @@
 // [RLVa:KB]
 #include "rlvhandler.h"
 // [/RLVa:KB]
+
+// Maximum number of avatar picks
+const S32 MAX_AVATAR_PICKS = 10;
 
 // Statics
 std::list<LLPanelAvatar*> LLPanelAvatar::sAllPanels;

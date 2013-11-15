@@ -35,6 +35,17 @@
 
 class LLMessageSystem;
 
+
+enum LLGroupChange
+{
+	GC_PROPERTIES,
+	GC_MEMBER_DATA,
+	GC_ROLE_DATA,
+	GC_ROLE_MEMBER_DATA,
+	GC_TITLES,
+	GC_ALL
+};
+
 class LLGroupMgrObserver
 {
 public:
@@ -237,6 +248,7 @@ public:
 	void setAccessed();
 
 	const LLUUID& getMemberVersion() const { return mMemberVersion; }
+
 public:
 	typedef	std::map<LLUUID,LLGroupMemberData*> member_list_t;
 	typedef	std::map<LLUUID,LLGroupRoleData*> role_list_t;

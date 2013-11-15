@@ -38,7 +38,6 @@
 #include "indra_constants.h"
 
 #include "llevent.h" 				// LLObservable base class
-#include "llagentconstants.h"
 #include "llagentdata.h" 			// gAgentID, gAgentSessionID
 #include "llcharacter.h"
 #include "llcoordframe.h"			// for mFrameAgent

@@ -236,6 +236,10 @@ void LLFirstUse::useInventory()
 	}
 }
 
+// first clean starts at 3 AM
+const S32 SANDBOX_FIRST_CLEAN_HOUR = 3;
+// clean every <n> hours
+const S32 SANDBOX_CLEAN_FREQ = 12;
 
 // static
 void LLFirstUse::useSandbox()

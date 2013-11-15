@@ -49,6 +49,18 @@
 #include "lleventinfo.h"
 #include "v3color.h"
 
+// map item types
+const U32 MAP_ITEM_TELEHUB = 0x01;
+const U32 MAP_ITEM_PG_EVENT = 0x02;
+const U32 MAP_ITEM_MATURE_EVENT = 0x03;
+//const U32 MAP_ITEM_POPULAR = 0x04;		// No longer supported, 2009-03-02 KLW
+//const U32 MAP_ITEM_AGENT_COUNT = 0x05;
+const U32 MAP_ITEM_AGENT_LOCATIONS = 0x06;
+const U32 MAP_ITEM_LAND_FOR_SALE = 0x07;
+const U32 MAP_ITEM_CLASSIFIED = 0x08;
+const U32 MAP_ITEM_ADULT_EVENT = 0x09;
+const U32 MAP_ITEM_LAND_FOR_SALE_ADULT = 0x0a;
+
 class LLMessageSystem;
 
 // Description of objects like hubs, events, land for sale, people and more (TBD).

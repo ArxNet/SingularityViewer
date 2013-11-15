@@ -34,7 +34,6 @@
 
 #include "llmenucommands.h"
 
-#include "imageids.h"
 #include "llfontgl.h"
 #include "llrect.h"
 #include "llerror.h"

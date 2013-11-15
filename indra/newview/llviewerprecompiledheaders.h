@@ -70,7 +70,6 @@
 // Library headers from llcommon project:
 #include "llbitpack.h"
 #include "lldeleteutils.h"
-#include "imageids.h"
 #include "indra_constants.h"
 #include "llinitparam.h"
 #include "llapp.h"
@@ -101,7 +100,6 @@
 #include "llsys.h"
 #include "llthread.h"
 #include "lltimer.h"
-#include "stdenums.h"
 #include "stdtypes.h"
 #include "timing.h"
 #include "u64.h"
@@ -166,20 +164,15 @@
 #include "message.h"
 #include "message_prehash.h"
 #include "net.h"
-//#include "network.h"
 #include "patch_code.h"
 #include "patch_dct.h"
 #include "sound_ids.h"
 
 // Library includes from llprimitive
-#include "imageids.h"
 #include "legacy_object_types.h"
 #include "llmaterialtable.h"
-//#include "llprimitive.h"
 #include "lltextureanim.h"
-//#include "lltextureentry.h"
 #include "lltreeparams.h"
-//#include "llvolume.h"
 #include "llvolumemgr.h"
 #include "material_codes.h"
 

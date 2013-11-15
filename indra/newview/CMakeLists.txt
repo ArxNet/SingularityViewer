@@ -1109,6 +1109,7 @@ set(viewer_HEADER_FILES
     rlvinventory.h
     rlvlocks.h
     rlvui.h
+    roles_constants.h
     scriptcounter.h
     sgmemstat.h
     sgversion.h

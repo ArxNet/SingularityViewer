@@ -33,7 +33,6 @@
 #ifndef LL_LLWIND_H
 #define LL_LLWIND_H
 
-//#include "vmath.h"
 #include "llmath.h"
 #include "v3math.h"
 #include "v3dmath.h"
@@ -41,6 +40,8 @@
 class LLVector3;
 class LLBitPack;
 class LLGroupHeader;
+
+const F32 WIND_SCALE_HACK		= 2.0f;	// hack to make wind speeds more realistic
 
 
 class LLWind  

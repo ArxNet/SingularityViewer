@@ -28,7 +28,6 @@
 
 #include "llvosky.h"
 
-#include "imageids.h"
 #include "llfeaturemanager.h"
 #include "llviewercontrol.h"
 #include "llframetimer.h"

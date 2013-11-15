@@ -43,7 +43,6 @@
 #include "llfontgl.h"
 #include "llparcel.h"
 #include "lldbstrings.h"
-#include "llclickaction.h"
 
 // Viewer includes
 #include "llagent.h"

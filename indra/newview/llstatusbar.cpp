@@ -80,7 +80,6 @@
 #include "llappviewer.h"
 
 // library includes
-#include "imageids.h"
 #include "llfontgl.h"
 #include "llrect.h"
 #include "llerror.h"

@@ -39,7 +39,6 @@
 #include "llcheckboxctrl.h"
 #include "llstring.h"
 #include "lltexteditor.h"
-#include "llavatarconstants.h"
 #include "llagent.h"
 #include "llviewercontrol.h"
 #include "llviewernetwork.h"
@@ -52,6 +51,11 @@
 // [RLVa:KB]
 #include "rlvhandler.h"
 // [/RLVa:KB]
+
+char const* const VISIBILITY_DEFAULT = "default";
+char const* const VISIBILITY_HIDDEN = "hidden";
+char const* const VISIBILITY_VISIBLE = "visible";
+char const* const VISIBILITY_INVISIBLE = "invisible";
 
 class LLPrefsIMImpl : public LLPanel
 {

@@ -37,7 +37,6 @@
 
 // library includes
 #include "llpermissions.h"
-#include "llclickaction.h"
 #include "llfocusmgr.h"
 #include "llnotificationsutil.h"
 #include "lltrans.h"

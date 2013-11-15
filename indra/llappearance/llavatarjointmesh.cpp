@@ -28,7 +28,6 @@
 // Header Files
 //-----------------------------------------------------------------------------
 #include "linden_common.h"
-#include "imageids.h"
 #include "llfasttimer.h"
 #include "llrender.h"
 

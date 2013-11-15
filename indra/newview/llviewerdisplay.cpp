@@ -112,6 +112,11 @@ BOOL gResizeScreenTexture = FALSE;
 BOOL gWindowResized = FALSE;
 BOOL gSnapshot = FALSE;
 
+// This is how long the sim will try to teleport you before giving up.
+const F32 TELEPORT_EXPIRY = 15.0f;
+// Additional time (in seconds) to wait per attachment
+const F32 TELEPORT_EXPIRY_PER_ATTACHMENT = 3.f;
+
 U32 gRecentFrameCount = 0; // number of 'recent' frames
 LLFrameTimer gRecentFPSTime;
 LLFrameTimer gRecentMemoryTime;

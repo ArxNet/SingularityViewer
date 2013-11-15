@@ -32,7 +32,7 @@
 #include "llpermissionsflags.h"
 #include "llpointer.h"
 #include "llwearabletype.h"
-
+#include "llui.h"
 
 class LLFolderViewItem;
 class LLFolderView;
