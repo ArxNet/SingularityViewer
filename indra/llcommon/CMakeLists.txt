@@ -23,7 +23,6 @@ set(llcommon_SOURCE_FILES
     aithreadid.cpp
     imageids.cpp
     indra_constants.cpp
-    ll_template_cast.h
     llallocator.cpp
     llallocator_heap_profile.cpp
     llapp.cpp
@@ -61,13 +60,11 @@ set(llcommon_SOURCE_FILES
     llinstancetracker.cpp
     llliveappconfig.cpp
     lllivefile.cpp
-    lllog.cpp
     llmd5.cpp
     llmemory.cpp
     llmemorystream.cpp
     llmetrics.cpp
     llmortician.cpp
-    lloptioninterface.cpp
     llprocesslauncher.cpp
     llprocessor.cpp
     llptrto.cpp 
@@ -75,7 +72,6 @@ set(llcommon_SOURCE_FILES
     llrand.cpp
     llrefcount.cpp
     llrun.cpp
-    llscopedvolatileaprpool.h
     llsd.cpp
     llsdparam.cpp
     llsdserialize.cpp
@@ -112,8 +108,6 @@ set(llcommon_HEADER_FILES
     imageids.h
     indra_constants.h
     linden_common.h
-    linked_lists.h
-    llaccountingcost.h
     llalignedarray.h
     llagentconstants.h
     llallocator.h
@@ -128,7 +122,6 @@ set(llcommon_HEADER_FILES
     llbase64.h
     llbitpack.h
     llboost.h
-    llchat.h
     llclickaction.h
     llcommon.h
     llcommonutils.h
@@ -143,7 +136,6 @@ set(llcommon_HEADER_FILES
     lldepthstack.h
     lldictionary.h
     llendianswizzle.h
-    llenum.h
     llerror.h
     llerrorcontrol.h
     llerrorlegacy.h
@@ -170,25 +162,19 @@ set(llcommon_HEADER_FILES
     llinitparam.h
     llinstancetracker.h
     llkeythrottle.h
-    lllinkedqueue.h
     llliveappconfig.h
     lllivefile.h
-    lllog.h
-    lllslconstants.h
     llmap.h
     llmd5.h
     llmemory.h
     llmemorystream.h
     llmetrics.h
     llmortician.h
-    lloptioninterface.h
     llpointer.h
     llpreprocessor.h
     llpriqueuemap.h
     llprocesslauncher.h
     llprocessor.h
-    llptrskiplist.h
-    llptrskipmap.h
     llptrto.h
     llqueuedthread.h
     llrand.h
@@ -196,6 +182,7 @@ set(llcommon_HEADER_FILES
     llregistry.h
     llrun.h
     llsafehandle.h
+    llscopedvolatileaprpool.h
     llsd.h
     llsdparam.h
     llsdserialize.h
@@ -204,8 +191,6 @@ set(llcommon_HEADER_FILES
     llsecondlifeurls.h
     llsimplehash.h
     llsingleton.h
-    llskiplist.h
-    llskipmap.h
     llsortedvector.h
     llstacktrace.h
     llstat.h
@@ -221,7 +206,6 @@ set(llcommon_HEADER_FILES
     llthreadsafequeue.h
     lltimer.h
     lltreeiterators.h
-    lltypeinfolookup.h
     lluri.h
     lluuid.h
     sguuidhash.h

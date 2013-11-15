@@ -100,6 +100,7 @@ set(llui_HEADER_FILES
     llalertdialog.h
     llbutton.h
     llcallbackmap.h
+    llchat.h
     llcheckboxctrl.h
     llclipboard.h
     llcombobox.h

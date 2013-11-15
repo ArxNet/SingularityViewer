@@ -627,6 +627,7 @@ set(viewer_HEADER_FILES
     lfsimfeaturehandler.h
     lggdicdownload.h
     lgghunspell_wrapper.h
+    llaccountingcost.h
     llaccountingcostmanager.h
     llagent.h
     llagentaccess.h

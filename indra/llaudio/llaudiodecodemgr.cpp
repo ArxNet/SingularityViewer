@@ -576,7 +576,7 @@ public:
 	void processQueue(const F32 num_secs = 0.005);
 
 protected:
-	LLLinkedQueue<LLUUID> mDecodeQueue;
+	std::deque<LLUUID> mDecodeQueue;
 	LLPointer<LLVorbisDecodeState> mCurrentDecodep;
 };
 
@@ -655,7 +655,7 @@ void LLAudioDecodeMgr::Impl::processQueue(const F32 num_secs)
 
 		if (!done)
 		{
-			if (!mDecodeQueue.getLength())
+			if (mDecodeQueue.empty())
 			{
 				// Nothing else on the queue.
 				done = TRUE;
@@ -663,7 +663,8 @@ void LLAudioDecodeMgr::Impl::processQueue(const F32 num_secs)
 			else
 			{
 				LLUUID uuid;
-				mDecodeQueue.pop(uuid);
+				uuid = mDecodeQueue.front();
+				mDecodeQueue.pop_front();
 				if (gAudiop->hasDecodedFile(uuid))
 				{
 					// This file has already been decoded, don't decode it again.
@@ -720,6 +721,6 @@ bool LLAudioDecodeMgr::addDecodeRequest(const LLUUID &uuid)
 	else if (!gAssetStorage || !gAssetStorage->hasLocalAsset(uuid, LLAssetType::AT_SOUND))
 		return false;
 	
-	mImpl->mDecodeQueue.push(uuid);
+	mImpl->mDecodeQueue.push_back(uuid);
 	return true;
 }
