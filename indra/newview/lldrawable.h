@@ -341,7 +341,7 @@ private:
 	static U32 sCurVisible; // Counter for what value of mVisible means currently visible
 
 	static U32 sNumZombieDrawables;
-	static LLDynamicArrayPtr<LLPointer<LLDrawable> > sDeadList;
+	static LLDynamicArray<LLPointer<LLDrawable>, 32 > sDeadList;
 } LL_ALIGN_POSTFIX(16);
 
 

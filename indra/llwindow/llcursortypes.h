@@ -33,6 +33,8 @@
 #ifndef LL_LLCURSORTYPES_H
 #define LL_LLCURSORTYPES_H
 
+#include <string>
+
 // If you add types here, add them in LLCursor::getCursorFromString
 enum ECursorType {
 	UI_CURSOR_ARROW,
@@ -75,6 +77,6 @@ enum ECursorType {
 	UI_CURSOR_COUNT			// Number of elements in this enum (NOT a cursor)
 };
 
-LL_COMMON_API ECursorType getCursorFromString(const std::string& cursor_string);
+ECursorType getCursorFromString(const std::string& cursor_string);
 
 #endif // LL_LLCURSORTYPES_H

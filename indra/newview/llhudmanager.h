@@ -65,7 +65,7 @@ public:
 	static LLColor4 sChildColor;
 
 protected:
-	LLDynamicArrayPtr<LLPointer<LLHUDEffect>				> mHUDEffects;
+	LLDynamicArray<LLPointer<LLHUDEffect>, 32 > mHUDEffects;
 };
 
 #endif // LL_LLHUDMANAGER_H

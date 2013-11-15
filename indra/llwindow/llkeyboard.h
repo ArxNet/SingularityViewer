@@ -29,7 +29,7 @@
 
 #include <map>
 
-#include "string_table.h"
+#include "llstringtable.h"
 #include "lltimer.h"
 #include "indra_constants.h"
 

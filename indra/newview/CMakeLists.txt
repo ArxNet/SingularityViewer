@@ -1072,7 +1072,6 @@ set(viewer_HEADER_FILES
     llvosky.h
     llvosurfacepatch.h
     llvotree.h
-    llvotreenew.h
     llvovolume.h
     llvowater.h
     llvowlsky.h

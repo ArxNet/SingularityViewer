@@ -30,7 +30,6 @@ set(llcommon_SOURCE_FILES
     llapr.cpp
     llaprpool.cpp
     llassettype.cpp
-    llavatarname.cpp
     llbase32.cpp
     llbase64.cpp
     llbitpack.cpp
@@ -39,7 +38,6 @@ set(llcommon_SOURCE_FILES
     llcoros.cpp
     llcrc.cpp
     llcriticaldamp.cpp
-    llcursortypes.cpp
     lldate.cpp
     lldependencies.cpp
     lldictionary.cpp
@@ -56,7 +54,6 @@ set(llcommon_SOURCE_FILES
     llfile.cpp
     llfindlocale.cpp
     llfixedbuffer.cpp
-    llfoldertype.cpp
     llformat.cpp
     llframetimer.cpp
     llheartbeat.cpp
@@ -127,7 +124,6 @@ set(llcommon_HEADER_FILES
     llassettype.h
     llatomic.h
     llavatarconstants.h
-    llavatarname.h
     llbase32.h
     llbase64.h
     llbitpack.h
@@ -139,16 +135,13 @@ set(llcommon_HEADER_FILES
     llcoros.h
     llcrc.h
     llcriticaldamp.h
-    llcursortypes.h
     lldarray.h
-    lldarrayptr.h
     lldate.h
     lldefs.h
     lldeleteutils.h
     lldependencies.h
     lldepthstack.h
     lldictionary.h
-    lldqueueptr.h
     llendianswizzle.h
     llenum.h
     llerror.h
@@ -163,13 +156,11 @@ set(llcommon_HEADER_FILES
     lleventfilter.h
     llevents.h
     lleventtimer.h
-    llextendedstatus.h
     llfasttimer.h
     llfasttimer_class.h
     llfile.h
     llfindlocale.h
     llfixedbuffer.h
-    llfoldertype.h
     llformat.h
     llframetimer.h
     llhandle.h
@@ -190,7 +181,6 @@ set(llcommon_HEADER_FILES
     llmemorystream.h
     llmetrics.h
     llmortician.h
-    llnametable.h
     lloptioninterface.h
     llpointer.h
     llpreprocessor.h
@@ -240,7 +230,6 @@ set(llcommon_HEADER_FILES
     roles_constants.h
     stdenums.h
     stdtypes.h
-    string_table.h
     stringize.h
     timer.h
     timing.h

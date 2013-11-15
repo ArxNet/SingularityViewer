@@ -35,8 +35,6 @@
 
 #include "llcamera.h"
 #include "llerror.h"
-#include "lldarrayptr.h"
-#include "lldqueueptr.h"
 #include "lldrawpool.h"
 #include "llspatialpartition.h"
 #include "m4math.h"
@@ -47,10 +45,6 @@
 #include "lldrawable.h"
 #include "llrendertarget.h"
 #include "llfasttimer.h"
-
-#include <stack>
-
-#include <stack>
 
 #include <stack>
 

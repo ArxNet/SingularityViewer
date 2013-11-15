@@ -78,7 +78,7 @@ extern bool gShiftFrame;
 U32 LLDrawable::sCurVisible = 0;
 U32 LLDrawable::sNumZombieDrawables = 0;
 F32 LLDrawable::sCurPixelAngle = 0;
-LLDynamicArrayPtr<LLPointer<LLDrawable> > LLDrawable::sDeadList;
+LLDynamicArray<LLPointer<LLDrawable>, 32 > LLDrawable::sDeadList;
 
 #define FORCE_INVISIBLE_AREA 16.f
 

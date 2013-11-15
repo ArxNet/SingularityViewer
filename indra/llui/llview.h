@@ -42,7 +42,6 @@
 #include "llhandle.h"
 #include "llmortician.h"
 #include "llmousehandler.h"
-#include "llnametable.h"
 #include "llsd.h"
 #include "llstring.h"
 #include "llrect.h"
