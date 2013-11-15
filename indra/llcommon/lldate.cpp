@@ -43,9 +43,9 @@
 #include <iomanip>
 #include <sstream>
 
-#include "llfasttimer.h"
 #include "lltimer.h"
 #include "llstring.h"
+#include "llfasttimer.h"
 
 static const F64 DATE_EPOCH = 0.0;
 

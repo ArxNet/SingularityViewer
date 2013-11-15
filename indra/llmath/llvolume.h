@@ -41,7 +41,6 @@ class LLVolumeFace;
 class LLVolume;
 class LLVolumeTriangle;
 
-#include "lldarray.h"
 #include "lluuid.h"
 #include "v4color.h"
 //#include "vmath.h"
@@ -919,7 +918,7 @@ public:
 public:
 	S32 mID;
 	U32 mTypeMask;
-
+	
 	// Only used for INNER/OUTER faces
 	S32 mBeginS;
 	S32 mBeginT;

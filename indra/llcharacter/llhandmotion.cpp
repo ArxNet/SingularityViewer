@@ -200,7 +200,7 @@ BOOL LLHandMotion::onUpdate(F32 time, U8* joint_mask)
 	mCharacter->removeAnimationData("Hand Pose Priority");
 
 //	if (requestedHandPose)
-//		llinfos << "Hand Pose " << *requestedHandPose << llendl;
+//		LL_INFOS() << "Hand Pose " << *requestedHandPose << LL_ENDL;
 
 	// if we are still blending...
 	if (mCurrentPose != mNewPose)

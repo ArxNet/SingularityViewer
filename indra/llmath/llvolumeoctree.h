@@ -46,6 +46,7 @@ public:
 	{
 		ll_aligned_free_16(ptr);
 	}
+
 	LLVolumeTriangle()
 	{
 		mBinIndex = -1;	
@@ -81,6 +82,8 @@ public:
 	
 	S32 getBinIndex() const { return mBinIndex; }
 	void setBinIndex(S32 idx) const { mBinIndex = idx; }
+
+
 };
 
 class LLVolumeOctreeListener : public LLOctreeListener<LLVolumeTriangle>

@@ -181,6 +181,7 @@ public:
 	bool isMaterialListSubset( LLModel* ref );
 	bool needToAddFaces( LLModel* ref, int& refFaceCnt, int& modelFaceCnt );
 	
+	
 	std::vector<std::string> mMaterialList;
 
 	//data used for skin weights
