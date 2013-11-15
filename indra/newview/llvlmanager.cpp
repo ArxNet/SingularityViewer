@@ -35,12 +35,12 @@
 #include "llvlmanager.h"
 
 #include "indra_constants.h"
-#include "bitpack.h"
 #include "patch_code.h"
 #include "patch_dct.h"
 #include "llviewerregion.h"
 #include "llframetimer.h"
 #include "llsurface.h"
+#include "llbitpack.h"
 
 LLVLManager gVLManager;
 

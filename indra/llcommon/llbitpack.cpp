@@ -1,6 +1,6 @@
 /** 
- * @file llvolumexml.h
- * @brief LLVolumeXml base class
+ * @file bitpack.cpp
+ * @brief LLBitPack class implementation
  *
  * $LicenseInfo:firstyear=2001&license=viewerlgpl$
  * Second Life Viewer Source Code
@@ -24,22 +24,7 @@
  * $/LicenseInfo$
  */
 
-#ifndef LL_LLVOLUMEXML_H
-#define LL_LLVOLUMEXML_H
+#include "linden_common.h"
 
-#include "llvolume.h"
-#include "llxmlnode.h"
-
-// wrapper class for some volume/message functions
-class LLVolumeXml
-{
-public:
-	static LLPointer<LLXMLNode> exportProfileParams(const LLProfileParams* params);
-
-	static LLPointer<LLXMLNode> exportPathParams(const LLPathParams* params);
-
-	static LLPointer<LLXMLNode> exportVolumeParams(const LLVolumeParams* params);
-};
-
-#endif // LL_LLVOLUMEXML_H
-
+// implementation is all in the header, this include dep ensures the unit test is rerun if the implementation changes.
+#include "llbitpack.h"

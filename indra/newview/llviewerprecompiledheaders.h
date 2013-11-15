@@ -68,12 +68,11 @@
 #endif
 
 // Library headers from llcommon project:
-#include "bitpack.h"
+#include "llbitpack.h"
 #include "lldeleteutils.h"
 #include "imageids.h"
 #include "indra_constants.h"
 #include "llinitparam.h"
-
 #include "llapp.h"
 #include "llapr.h"
 #include "llcriticaldamp.h"
@@ -87,7 +86,6 @@
 #include "llfasttimer.h"
 #include "llframetimer.h"
 #include "llhash.h"
-#include "lllocalidhashmap.h"
 #include "llmap.h"
 #include "llmemory.h"
 #include "llnametable.h"
@@ -97,7 +95,6 @@
 #include "llrefcount.h"
 #include "llsafehandle.h"
 #include "llsd.h"
-#include "llstack.h"
 #include "llstat.h"
 #include "llsingleton.h"
 #include "llstl.h"

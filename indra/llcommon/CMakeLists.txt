@@ -33,6 +33,7 @@ set(llcommon_SOURCE_FILES
     llavatarname.cpp
     llbase32.cpp
     llbase64.cpp
+    llbitpack.cpp
     llcommon.cpp
     llcommonutils.cpp
     llcoros.cpp
@@ -97,9 +98,6 @@ set(llcommon_SOURCE_FILES
     lluri.cpp
     lluuid.cpp
     llworkerthread.cpp
-    metaclass.cpp
-    metaproperty.cpp
-    reflective.cpp
     timing.cpp
     u64.cpp
     )
@@ -113,9 +111,7 @@ set(llcommon_HEADER_FILES
     airecursive.h
     aithreadid.h
     aithreadsafe.h
-    bitpack.h
     ctype_workaround.h
-    doublelinkedlist.h
     imageids.h
     indra_constants.h
     linden_common.h
@@ -129,12 +125,12 @@ set(llcommon_HEADER_FILES
     llapr.h
     llaprpool.h
     llassettype.h
-    llassoclist.h
     llatomic.h
     llavatarconstants.h
     llavatarname.h
     llbase32.h
     llbase64.h
+    llbitpack.h
     llboost.h
     llchat.h
     llclickaction.h
@@ -152,7 +148,6 @@ set(llcommon_HEADER_FILES
     lldependencies.h
     lldepthstack.h
     lldictionary.h
-    lldlinked.h
     lldqueueptr.h
     llendianswizzle.h
     llenum.h
@@ -181,14 +176,12 @@ set(llcommon_HEADER_FILES
     llhash.h
     llheartbeat.h
     llhttpstatuscodes.h
-    llindexedqueue.h
     llinitparam.h
     llinstancetracker.h
     llkeythrottle.h
     lllinkedqueue.h
     llliveappconfig.h
     lllivefile.h
-    lllocalidhashmap.h
     lllog.h
     lllslconstants.h
     llmap.h
@@ -224,7 +217,6 @@ set(llcommon_HEADER_FILES
     llskiplist.h
     llskipmap.h
     llsortedvector.h
-    llstack.h
     llstacktrace.h
     llstat.h
     llstatenums.h
@@ -245,12 +237,6 @@ set(llcommon_HEADER_FILES
     sguuidhash.h
     llversionviewer.h.in
     llworkerthread.h
-    metaclass.h
-    metaclasst.h
-    metaproperty.h
-    metapropertyt.h
-    reflective.h
-    reflectivet.h
     roles_constants.h
     stdenums.h
     stdtypes.h

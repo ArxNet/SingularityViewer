@@ -31,7 +31,6 @@ set(llprimitive_SOURCE_FILES
     lltextureentry.cpp
     lltreeparams.cpp
     llvolumemessage.cpp
-    llvolumexml.cpp
     material_codes.cpp
     )
 
@@ -51,7 +50,6 @@ set(llprimitive_HEADER_FILES
     lltree_common.h
     lltreeparams.h
     llvolumemessage.h
-    llvolumexml.h
     material_codes.h
     object_flags.h
     )
