@@ -1460,7 +1460,7 @@ void LLViewerWindow::handleMenuSelect(LLWindow *window,  S32 menu_item)
 BOOL LLViewerWindow::handlePaint(LLWindow *window,  S32 x,  S32 y, S32 width,  S32 height)
 {
 #if LL_WINDOWS
-	if (gNoRender)
+	if (gHeadlessClient)
 	{
 		HWND window_handle = (HWND)window->getPlatformWindow();
 		PAINTSTRUCT ps; 
@@ -1644,9 +1644,9 @@ LLViewerWindow::LLViewerWindow(
 	mWindow = LLWindowManager::createWindow(this,
 		title, name, x, y, width, height, 0,
 		fullscreen, 
-		gNoRender,
+		gHeadlessClient,
 		gSavedSettings.getBOOL("DisableVerticalSync"),
-		!gNoRender,
+		!gHeadlessClient,
 		ignore_pixel_depth,
 		gSavedSettings.getBOOL("RenderUseFBO") ? 0 : gSavedSettings.getU32("RenderFSAASamples")); //don't use window level anti-aliasing if FBOs are enabled
 
@@ -1758,14 +1758,12 @@ LLViewerWindow::LLViewerWindow(
 	// Init font system, but don't actually load the fonts yet
 	// because our window isn't onscreen and they take several
 	// seconds to parse.
-	if (!gNoRender)
-	{
 	LLFontGL::initClass( gSavedSettings.getF32("FontScreenDPI"),
 								mDisplayScale.mV[VX],
 								mDisplayScale.mV[VY],
 								gDirUtilp->getAppRODataDir(),
 								LLUICtrlFactory::getXUIPaths());
-	}
+
 	// Create container for all sub-views
 	LLView::Params rvp;
 	rvp.name("root");
@@ -2277,11 +2275,8 @@ void LLViewerWindow::shutdownGL()
 	LLSelectMgr::getInstance()->cleanup();
 
 	llinfos << "Stopping GL during shutdown" << llendl;
-	if (!gNoRender)
-	{
-		stopGL(FALSE);
-		stop_glerror();
-	}
+	stopGL(FALSE);
+	stop_glerror();
 
 	gGL.shutdown();
 
@@ -2355,11 +2350,6 @@ void LLViewerWindow::reshape(S32 width, S32 height)
 	// may have been destructed.
 	if (!LLApp::isExiting())
 	{
-		if (gNoRender)
-		{
-			return;
-		}
-
 		gWindowResized = TRUE;
 		glViewport(0, 0, width, height );
 
@@ -3006,12 +2996,6 @@ void LLViewerWindow::updateUI()
 	}
 
 	updateMouseDelta();
-	
-	if (gNoRender)
-	{
-		return;
-	}
-	
 	updateKeyboardFocus();
 
 	BOOL handled = FALSE;
@@ -3846,11 +3830,6 @@ BOOL LLViewerWindow::clickPointOnSurfaceGlobal(const S32 x, const S32 y, LLViewe
 
 void LLViewerWindow::pickAsync(S32 x, S32 y_from_bot, MASK mask, void (*callback)(const LLPickInfo& info), BOOL pick_transparent, BOOL get_surface_info)
 {
-	if (gNoRender)
-	{
-		return;
-	}
-
 	// push back pick info object
 	BOOL in_build_mode = gFloaterTools && gFloaterTools->getVisible();
 	if (in_build_mode || LLDrawPoolAlpha::sShowDebugAlpha)
@@ -3885,11 +3864,6 @@ void LLViewerWindow::schedulePick(LLPickInfo& pick_info)
 
 void LLViewerWindow::performPick()
 {
-	if (gNoRender)
-	{
-		return;
-	}
-
 	if (!mPicks.empty())
 	{
 		std::vector<LLPickInfo>::iterator pick_it;
@@ -3921,11 +3895,6 @@ void LLViewerWindow::returnEmptyPicks()
 // Performs the GL object/land pick.
 LLPickInfo LLViewerWindow::pickImmediate(S32 x, S32 y_from_bot,  BOOL pick_transparent)
 {
-	if (gNoRender)
-	{
-		return LLPickInfo();
-	}
-
 	// push back pick info object
 	BOOL in_build_mode = gFloaterTools && gFloaterTools->getVisible();
 	if (in_build_mode || LLDrawPoolAlpha::sShowDebugAlpha)
@@ -5715,16 +5684,6 @@ LLRect LLViewerWindow::getChatConsoleRect()
 //static 
 bool LLViewerWindow::onAlert(const LLSD& notify)
 {
-	LLNotificationPtr notification = LLNotifications::instance().find(notify["id"].asUUID());
-
-	if (gNoRender)
-	{
-		llinfos << "Alert: " << notification->getName() << llendl;
-		notification->respond(LLSD::emptyMap());
-		LLNotifications::instance().cancel(notification);
-		return false;
-	}
-
 	// If we're in mouselook, the mouse is hidden and so the user can't click 
 	// the dialog buttons.  In that case, change to First Person instead.
 	if( gAgentCamera.cameraMouselook() )

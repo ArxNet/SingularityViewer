@@ -57,7 +57,7 @@
 BOOL gDebugSession = FALSE;
 BOOL gDebugGL = FALSE;
 BOOL gClothRipple = FALSE;
-BOOL gNoRender = FALSE;
+BOOL gHeadlessClient = FALSE;
 BOOL gGLActive = FALSE;
 
 std::ofstream gFailLog;
@@ -1435,8 +1435,6 @@ void do_assert_glerror()
 
 void assert_glerror()
 {
-	if (gNoRender)
-		return;
 	if (!gGLActive)
 	{
 		//llwarns << "GL used while not active!" << llendl;

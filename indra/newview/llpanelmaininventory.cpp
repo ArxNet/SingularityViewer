@@ -367,7 +367,7 @@ BOOL LLInventoryView::handleKeyHere(KEY key, MASK mask)
 // *TODO: remove take_keyboard_focus param
 LLInventoryView* LLInventoryView::showAgentInventory(BOOL take_keyboard_focus)
 {
-	if (gDisconnected || gNoRender)
+	if (gDisconnected)
 	{
 		return NULL;
 	}

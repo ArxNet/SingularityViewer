@@ -500,16 +500,7 @@ bool idle_startup()
 	gViewerWindow->updateUI();
 	LLMortician::updateClass();
 
-	if (gNoRender)
-	{
-		// HACK, skip optional updates if you're running drones
-		//gSkipOptionalUpdate = TRUE;
-	}
-	else
-	{
-		// Update images?
-		gTextureList.updateImages(0.01f);
-	}
+	gTextureList.updateImages(0.01f);
 
 	if ( STATE_FIRST == LLStartUp::getStartupState() )
 	{
@@ -850,19 +841,16 @@ bool idle_startup()
 
 		gGenericHandlers = new GenericHandlers();
 
-		// Initialize UI
-		if (!gNoRender)
-		{
-			// Initialize all our tools.  Must be done after saved settings loaded.
-			// NOTE: This also is where gToolMgr used to be instantiated before being turned into a singleton.
-			display_startup();
-			LLToolMgr::getInstance()->initTools();
 
-			display_startup();
-			// Quickly get something onscreen to look at.
-			gViewerWindow->initWorldUI();
-			display_startup();
-		}
+		// Initialize all our tools.  Must be done after saved settings loaded.
+		// NOTE: This also is where gToolMgr used to be instantiated before being turned into a singleton.
+		display_startup();
+		LLToolMgr::getInstance()->initTools();
+
+		display_startup();
+		// Quickly get something onscreen to look at.
+		gViewerWindow->initWorldUI();
+		display_startup();
 
 		if (show_connect_box)
 		{
@@ -872,10 +860,6 @@ bool idle_startup()
 			// show the login view until login_show() is called below.  
 			// LLPanelLogin::getFields(firstname, lastname, password);
 
-			if (gNoRender)
-			{
-				LL_ERRS("AppInit") << "Need to autologin or use command line with norender!" << LL_ENDL;
-			}
 			// Make sure the process dialog doesn't hide things
 			display_startup();
 			gViewerWindow->setShowProgress(FALSE);
@@ -1150,10 +1134,7 @@ bool idle_startup()
 
 		gViewerWindow->getWindow()->setCursor(UI_CURSOR_WAIT);
 
-		if (!gNoRender)
-		{
-			init_start_screen(agent_location_id);
-		}
+		init_start_screen(agent_location_id);
 
 		// Display the startup progress bar.
 		gViewerWindow->setShowProgress(!gSavedSettings.getBOOL("AscentDisableLogoutScreens"));
@@ -1550,7 +1531,7 @@ bool idle_startup()
 		if (successful_login)
 		{
 			// unpack login data needed by the application
-			if (process_login_success_response(password, first_sim_size_x, first_sim_size_y))
+			if(process_login_success_response(password, first_sim_size_x, first_sim_size_y))
 			{
 				std::string name = firstname;
 				if (!gHippoGridManager->getCurrentGrid()->isSecondLife() ||
@@ -1568,12 +1549,6 @@ bool idle_startup()
 			}
 			else
 			{
-				if (gNoRender)
-				{
-					LL_WARNS("AppInit") << "Bad login - missing return values" << LL_ENDL;
-					LL_WARNS("AppInit") << emsg << LL_ENDL;
-					exit(0);
-				}
 				// Bounce back to the login screen.
 				LLSD args;
 				args["ERROR_MESSAGE"] = emsg.str();
@@ -1584,12 +1559,6 @@ bool idle_startup()
 		}
 		else // if(!successful_login)
 		{
-			if (gNoRender)
-			{
-				LL_WARNS("AppInit") << "Failed to login!" << LL_ENDL;
-				LL_WARNS("AppInit") << emsg << LL_ENDL;
-				exit(0);
-			}
 			// Bounce back to the login screen.
 			LLSD args;
 			args["ERROR_MESSAGE"] = emsg.str();
@@ -1802,25 +1771,20 @@ bool idle_startup()
 		}
 		
 
+		//Set up cloud rendertypes. Passed argument is unused.
+		handleCloudSettingsChanged(LLSD());
+		display_startup();
+
+		LLError::logToFixedBuffer(gDebugView->mDebugConsolep);
+		display_startup();
 		
-		if (!gNoRender)
+		// set initial visibility of debug console
+		gDebugView->mDebugConsolep->setVisible(gSavedSettings.getBOOL("ShowDebugConsole"));
+		display_startup();
+		if (gSavedSettings.getBOOL("ShowDebugStats"))
 		{
-			//Set up cloud rendertypes. Passed argument is unused.
-			handleCloudSettingsChanged(LLSD());
+			LLFloaterStats::showInstance();
 			display_startup();
-			
-			
-			LLError::logToFixedBuffer(gDebugView->mDebugConsolep);
-			display_startup();
-			
-			// set initial visibility of debug console
-			gDebugView->mDebugConsolep->setVisible(gSavedSettings.getBOOL("ShowDebugConsole"));
-			display_startup();
-			if (gSavedSettings.getBOOL("ShowDebugStats"))
-			{
-				LLFloaterStats::showInstance();
-				display_startup();
-			}
 		}
 
 		//
@@ -1863,14 +1827,12 @@ bool idle_startup()
 		//reset statistics
 		LLViewerStats::instance().resetStats();
 
-		if (!gNoRender)
-		{
-			//
-			// Set up all of our statistics UI stuff.
-			//
-			display_startup();
-			init_stat_view();
-		}
+
+		//
+		// Set up all of our statistics UI stuff.
+		//
+		display_startup();
+		init_stat_view();
 
 		display_startup();
 		//
@@ -1918,18 +1880,15 @@ bool idle_startup()
 		display_startup();
 
 		// Initialize global class data needed for surfaces (i.e. textures)
-		if (!gNoRender)
-		{
-			LL_DEBUGS("AppInit") << "Initializing sky..." << LL_ENDL;
-			// Initialize all of the viewer object classes for the first time (doing things like texture fetches.
-			LLGLState::checkStates();
-			LLGLState::checkTextureChannels();
+		LL_DEBUGS("AppInit") << "Initializing sky..." << LL_ENDL;
+		// Initialize all of the viewer object classes for the first time (doing things like texture fetches.
+		LLGLState::checkStates();
+		LLGLState::checkTextureChannels();
 
-			gSky.init(initial_sun_direction);
+		gSky.init(initial_sun_direction);
 
-			LLGLState::checkStates();
-			LLGLState::checkTextureChannels();
-		}
+		LLGLState::checkStates();
+		LLGLState::checkTextureChannels();
 
 		display_startup();
 
@@ -2352,50 +2311,46 @@ bool idle_startup()
 			// and make sure it's saved
 			gSavedSettings.saveToFile( gSavedSettings.getString("ClientSettingsFile") , TRUE );
 		};
-	
+
+		display_startup();
+		//Now that we're loading the world, initialize the audio engine.
+		init_audio();
 		display_startup();
 
-		if (!gNoRender)
+		// JC: Initialize "active" gestures.  This may also trigger
+		// many gesture downloads, if this is the user's first
+		// time on this machine or -purge has been run.
+		LLSD gesture_options 
+			= LLUserAuth::getInstance()->getResponse("gestures");
+		if (gesture_options.isDefined())
 		{
-			//Now that we're loading the world, initialize the audio engine.
-			init_audio();
-			display_startup();
-
-			// JC: Initialize "active" gestures.  This may also trigger
-			// many gesture downloads, if this is the user's first
-			// time on this machine or -purge has been run.
-			LLSD gesture_options 
-				= LLUserAuth::getInstance()->getResponse("gestures");
-			if (gesture_options.isDefined())
+			LL_DEBUGS("AppInit") << "Gesture Manager loading " << gesture_options.size()
+				<< LL_ENDL;
+			uuid_vec_t item_ids;
+			for(LLSD::array_const_iterator resp_it = gesture_options.beginArray(),
+				end = gesture_options.endArray(); resp_it != end; ++resp_it)
 			{
-				LL_DEBUGS("AppInit") << "Gesture Manager loading " << gesture_options.size()
-					<< LL_ENDL;
-				uuid_vec_t item_ids;
-				for(LLSD::array_const_iterator resp_it = gesture_options.beginArray(),
-					end = gesture_options.endArray(); resp_it != end; ++resp_it)
-				{
-					// If the id is not specifed in the LLSD,
-					// the LLSD operator[]() will return a null LLUUID. 
-					LLUUID item_id = (*resp_it)["item_id"];
-					LLUUID asset_id = (*resp_it)["asset_id"];
+				// If the id is not specifed in the LLSD,
+				// the LLSD operator[]() will return a null LLUUID. 
+				LLUUID item_id = (*resp_it)["item_id"];
+				LLUUID asset_id = (*resp_it)["asset_id"];
 
-					if (item_id.notNull() && asset_id.notNull())
-					{
-						// Could schedule and delay these for later.
-						const BOOL no_inform_server = FALSE;
-						const BOOL no_deactivate_similar = FALSE;
-						LLGestureMgr::instance().activateGestureWithAsset(item_id, asset_id,
-											 no_inform_server,
-											 no_deactivate_similar);
-						// We need to fetch the inventory items for these gestures
-						// so we have the names to populate the UI.
-						item_ids.push_back(item_id);
-					}
+				if (item_id.notNull() && asset_id.notNull())
+				{
+					// Could schedule and delay these for later.
+					const BOOL no_inform_server = FALSE;
+					const BOOL no_deactivate_similar = FALSE;
+					LLGestureMgr::instance().activateGestureWithAsset(item_id, asset_id,
+										 no_inform_server,
+										 no_deactivate_similar);
+					// We need to fetch the inventory items for these gestures
+					// so we have the names to populate the UI.
+					item_ids.push_back(item_id);
 				}
-				// no need to add gesture to inventory observer, it's already made in constructor 
-				LLGestureMgr::instance().setFetchIDs(item_ids);
-				LLGestureMgr::instance().startFetch();
 			}
+			// no need to add gesture to inventory observer, it's already made in constructor 
+			LLGestureMgr::instance().setFetchIDs(item_ids);
+			LLGestureMgr::instance().startFetch();
 		}
 		gDisplaySwapBuffers = TRUE;
 		display_startup();

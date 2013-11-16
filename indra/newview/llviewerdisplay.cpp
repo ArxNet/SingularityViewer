@@ -132,10 +132,10 @@ void render_disconnected_background();
 
 void display_startup()
 {
-	if (   !gViewerWindow->getActive()
+	if (   !gViewerWindow
+		|| !gViewerWindow->getActive()
 		|| !gViewerWindow->getWindow()->getVisible() 
-		|| gViewerWindow->getWindow()->getMinimized()
-		|| gNoRender )
+		|| gViewerWindow->getWindow()->getMinimized() )
 	{
 		return; 
 	}
@@ -219,7 +219,7 @@ void display_update_camera(bool tiling=false)
 // Write some stats to llinfos
 void display_stats()
 {
-	if (gNoRender || !gViewerWindow->getWindow()->getVisible() || !gFocusMgr.getAppHasFocus())
+	if (!gViewerWindow->getWindow()->getVisible() || !gFocusMgr.getAppHasFocus())
 	{
 		// Do not keep FPS statistics while yielding cooperatively
 		// (i;e. when not running as foreground window)
@@ -351,7 +351,8 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot, boo
 	// Logic for forcing window updates if we're in drone mode.
 	//
 
-	if (gNoRender) 
+	// *TODO: Investigate running display() during gHeadlessClient.  See if this early exit is needed DK 2011-02-18
+	if (gHeadlessClient) 
 	{
 #if LL_WINDOWS
 		static F32 last_update_time = 0.f;

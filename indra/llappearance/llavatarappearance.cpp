@@ -257,14 +257,10 @@ void LLAvatarAppearance::initInstance()
 			 ++iter)
 		{
 			LLAvatarJointMesh* mesh = (*iter);
-			mBakedTextureDatas[(int)baked_texture_index].mJointMeshes.push_back(mesh);
+			mBakedTextureDatas[(S32)baked_texture_index].mJointMeshes.push_back(mesh);
 		}
 	}
 
-	if (gNoRender)
-	{
-		return;
-	}
 	buildCharacter();
 
 }
@@ -737,12 +733,6 @@ void LLAvatarAppearance::buildCharacter()
 
 	BOOL status = loadAvatar();
 	stop_glerror();
-
-	if (gNoRender)
-	{
-		// Still want to load the avatar skeleton so visual parameters work.
-		return;
-	}
 
 // 	gPrintMessagesThisFrame = TRUE;
 	lldebugs << "Avatar load took " << timer.getElapsedTimeF32() << " seconds." << llendl;

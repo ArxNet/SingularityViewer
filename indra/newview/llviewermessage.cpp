@@ -369,7 +369,7 @@ void process_layer_data(LLMessageSystem *mesgsys, void **user_data)
 {
 	LLViewerRegion *regionp = LLWorld::getInstance()->getRegion(mesgsys->getSender());
 
-	if(!regionp || gNoRender)
+	if(!regionp)
 	{
 		llwarns << "Invalid region for layer data." << llendl;
 		return;
@@ -2167,10 +2167,6 @@ std::string replace_wildcards(std::string autoresponse, const LLUUID& id, const 
 
 void process_improved_im(LLMessageSystem *msg, void **user_data)
 {
-	if (gNoRender)
-	{
-		return;
-	}
 	LLUUID from_id;
 	BOOL from_group;
 	LLUUID to_id;
@@ -5220,7 +5216,7 @@ void process_time_synch(LLMessageSystem *mesgsys, void **user_data)
 
 	gSky.setSunPhase(phase);
 	gSky.setSunTargetDirection(sun_direction, sun_ang_velocity);
-	if (!gNoRender && !(gSavedSettings.getBOOL("SkyOverrideSimSunPosition") || gSky.getOverrideSun()))
+	if ( !(gSavedSettings.getBOOL("SkyOverrideSimSunPosition") || gSky.getOverrideSun()))
 	{
 		gSky.setSunDirection(sun_direction, sun_ang_velocity);
 	}
@@ -6779,21 +6775,11 @@ time_t								gLastDisplayedTime = 0;
 
 void handle_show_mean_events(void *)
 {
-	if (gNoRender)
-	{
-		return;
-	}
-
 	LLFloaterBump::show(NULL);
 }
 
 void mean_name_callback(const LLUUID &id, const std::string& full_name, bool is_group)
 {
-	if (gNoRender)
-	{
-		return;
-	}
-
 	static const U32 max_collision_list_size = 20;
 	if (gMeanCollisionList.size() > max_collision_list_size)
 	{

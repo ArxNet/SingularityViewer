@@ -6515,10 +6515,7 @@ class LLShowFloater : public view_listener_t
 		}
 		else if (floater_name == "mean events")
 		{
-			if (!gNoRender)
-			{
-				LLFloaterBump::show(NULL);
-			}
+			LLFloaterBump::show(NULL);
 		}
 		else // Simple codeless floater
 		{

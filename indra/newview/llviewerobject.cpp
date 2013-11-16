@@ -513,11 +513,6 @@ void LLViewerObject::initVOClasses()
 	// Initialized shared class stuff first.
 	LLVOAvatar::initClass();
 	LLVOTree::initClass();
-	if (gNoRender)
-	{
-		// Don't init anything else in drone mode
-		return;
-	}
 	llinfos << "Viewer Object size: " << sizeof(LLViewerObject) << llendl;
 	LLVOGrass::initClass();
 	LLVOWater::initClass();

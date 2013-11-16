@@ -10,7 +10,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation;
  * version 2.1 of the License only.
- * 
+ *  
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -526,17 +526,15 @@ BOOL LLSelectMgr::removeObjectFromSelections(const LLUUID &id)
 {
 	BOOL object_found = FALSE;
 	LLTool *tool = NULL;
-	if (!gNoRender)
-	{
-		tool = LLToolMgr::getInstance()->getCurrentTool();
 
-		// It's possible that the tool is editing an object that is not selected
-		LLViewerObject* tool_editing_object = tool->getEditingObject();
-		if( tool_editing_object && tool_editing_object->mID == id)
-		{
-			tool->stopEditing();
-			object_found = TRUE;
-		}
+	tool = LLToolMgr::getInstance()->getCurrentTool();
+
+	// It's possible that the tool is editing an object that is not selected
+	LLViewerObject* tool_editing_object = tool->getEditingObject();
+	if( tool_editing_object && tool_editing_object->mID == id)
+	{
+		tool->stopEditing();
+		object_found = TRUE;
 	}
 
 	// Iterate through selected objects list and kill the object
@@ -6426,11 +6424,6 @@ void dialog_refresh_all()
 	// outside the selection manager change properties of selected objects
 	// and call into this function.  Yuck.
 	LLSelectMgr::getInstance()->mUpdateSignal();
-
-	if (gNoRender)
-	{
-		return;
-	}
 
 	// *TODO: Eliminate all calls into outside classes below, make those
 	// objects register with the update signal.

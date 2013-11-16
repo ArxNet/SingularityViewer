@@ -1593,7 +1593,7 @@ void LLViewerObjectList::shiftObjects(const LLVector3 &offset)
 	// We need to update many object caches, I'll document this more as I dig through the code
 	// cleaning things out...
 
-	if (gNoRender || 0 == offset.magVecSquared())
+	if (0 == offset.magVecSquared())
 	{
 		return;
 	}
@@ -2106,11 +2106,6 @@ void LLViewerObjectList::orphanize(LLViewerObject *childp, U32 parent_id, U32 ip
 
 void LLViewerObjectList::findOrphans(LLViewerObject* objectp, U32 ip, U32 port)
 {
-	if (gNoRender)
-	{
-		return;
-	}
-
 	if (objectp->isDead())
 	{
 		llwarns << "Trying to find orphans for dead obj " << objectp->mID 

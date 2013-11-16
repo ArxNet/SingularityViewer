@@ -291,25 +291,22 @@ void LLAgentCamera::resetView(BOOL reset_camera, BOOL change_camera)
 		gAgent.stopAutoPilot(TRUE);
 	}
 
-	if (!gNoRender)
+	LLSelectMgr::getInstance()->unhighlightAll();
+
+	// By popular request, keep land selection while walking around. JC
+	// LLViewerParcelMgr::getInstance()->deselectLand();
+
+	// force deselect when walking and attachment is selected
+	// this is so people don't wig out when their avatar moves without animating
+	if (LLSelectMgr::getInstance()->getSelection()->isAttachment())
 	{
-		LLSelectMgr::getInstance()->unhighlightAll();
+		LLSelectMgr::getInstance()->deselectAll();
+	}
 
-		// By popular request, keep land selection while walking around. JC
-		// LLViewerParcelMgr::getInstance()->deselectLand();
-
-		// force deselect when walking and attachment is selected
-		// this is so people don't wig out when their avatar moves without animating
-		if (LLSelectMgr::getInstance()->getSelection()->isAttachment())
-		{
-			LLSelectMgr::getInstance()->deselectAll();
-		}
-
-		if (gMenuHolder != NULL)
-		{
-			// Hide all popup menus
-			gMenuHolder->hideMenus();
-		}
+	if (gMenuHolder != NULL)
+	{
+		// Hide all popup menus
+		gMenuHolder->hideMenus();
 	}
 
 	static const LLCachedControl<bool> freeze_time("FreezeTime",false);

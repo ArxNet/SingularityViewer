@@ -323,8 +323,6 @@ BOOL LLVOAvatarSelf::buildMenus()
 	//-------------------------------------------------------------------------
 	// build the attach and detach menus
 	//-------------------------------------------------------------------------
-	if(gNoRender)
-		return TRUE;
 	buildContextMenus();
 
 	init_meshes_and_morphs_menu();
@@ -609,8 +607,7 @@ void LLVOAvatarSelf::idleUpdate(LLAgent &agent, LLWorld &world, const F64 &time)
 	if (isValid())
 	{
 		LLVOAvatar::idleUpdate(agent, world, time);
-		if(!gNoRender)
-			idleUpdateTractorBeam();
+		idleUpdateTractorBeam();
 	}
 }
 
@@ -3127,10 +3124,6 @@ bool LLVOAvatarSelf::sendAppearanceMessage(LLMessageSystem *mesgsys) const
 //------------------------------------------------------------------------
 BOOL LLVOAvatarSelf::needsRenderBeam()
 {
-	if (gNoRender)
-	{
-		return FALSE;
-	}
 	LLTool *tool = LLToolMgr::getInstance()->getCurrentTool();
 
 	BOOL is_touching_or_grabbing = (tool == LLToolGrab::getInstance() && LLToolGrab::getInstance()->isEditing());

@@ -96,11 +96,6 @@ void LLViewerTextureList::init()
 	mUpdateStats = TRUE;
 	mMaxResidentTexMemInMegaBytes = 0;
 	mMaxTotalTextureMemInMegaBytes = 0 ;
-	if (gNoRender)
-	{
-		// Don't initialize GL stuff if we're not rendering.
-		return;
-	}
 	
 	// Update how much texture RAM we're allowed to use.
 	updateMaxResidentTexMem(0); // 0 = use current
@@ -373,16 +368,9 @@ LLViewerFetchedTexture* LLViewerTextureList::getImageFromUrl(const std::string& 
 												   LLGLenum primary_format, 
 												   const LLUUID& force_id)
 {
-	
 	if(!mInitialized)
 	{
 		return NULL ;
-	}
-	if (gNoRender)
-	{
-		// Never mind that this ignores image_set_id;
-		// getImage() will handle that later.
-		return LLViewerTextureManager::getFetchedTexture(IMG_DEFAULT, TRUE, LLGLTexture::BOOST_UI);
 	}
 
 	// generate UUID based on hash of filename
@@ -888,7 +876,7 @@ void LLViewerTextureList::updateImagesDecodePriorities()
 
 F32 LLViewerTextureList::updateImagesCreateTextures(F32 max_time)
 {
-	if (gNoRender || gGLManager.mIsDisabled) return 0.0f;
+	if (gGLManager.mIsDisabled) return 0.0f;
 	
 	//
 	// Create GL textures for all textures that need them (images which have been
@@ -1028,8 +1016,7 @@ void LLViewerTextureList::updateImagesUpdateStats()
 void LLViewerTextureList::decodeAllImages(F32 max_time)
 {
 	LLTimer timer;
-	if(gNoRender) return;
-	
+
 	// Update texture stats and priorities
 	std::vector<LLPointer<LLViewerFetchedTexture> > image_list;
 	for (image_priority_list_t::iterator iter = mImageList.begin();

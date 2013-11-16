@@ -714,11 +714,6 @@ void LLFloater::applyRectControl()
 
 void LLFloater::applyTitle()
 {
-	if (gNoRender)
-	{
-		return;
-	}
-
 	if (!mDragHandle)
 	{
 		return;

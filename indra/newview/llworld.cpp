@@ -112,11 +112,6 @@ LLWorld::LLWorld() :
 		mEdgeWaterObjects[i] = NULL;
 	}
 
-	if (gNoRender)
-	{
-		return;
-	}
-
 	LLPointer<LLImageRaw> raw = new LLImageRaw(1,1,4);
 	U8 *default_texture = raw->getData();
 	*(default_texture++) = MAX_WATER_COLOR.mV[0];
@@ -716,10 +711,7 @@ void LLWorld::updateVisibilities()
 			if (LLViewerCamera::getInstance()->AABBInFrustum(group->mBounds[0], group->mBounds[1]))
 			{
 				regionp->calculateCameraDistance();
-				if (!gNoRender)
-				{
-					regionp->getLand().updatePatchVisibilities(gAgent);
-				}
+				regionp->getLand().updatePatchVisibilities(gAgent);
 			}
 			else
 			{

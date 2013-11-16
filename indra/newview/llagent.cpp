@@ -1407,12 +1407,6 @@ void LLAgent::resetControlFlags()
 //-----------------------------------------------------------------------------
 void LLAgent::setAFK()
 {
-	// Drones can't go AFK
-	if (gNoRender)
-	{
-		return;
-	}
-
 	if (!gAgent.getRegion())
 	{
 		// Don't set AFK if we're not talking to a region yet.
@@ -1995,7 +1989,7 @@ void LLAgent::clearRenderState(U8 clearstate)
 //-----------------------------------------------------------------------------
 U8 LLAgent::getRenderState()
 {
-	if (gNoRender || gKeyboard == NULL)
+	if (gKeyboard == NULL)
 	{
 		return 0;
 	}
