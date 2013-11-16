@@ -403,15 +403,7 @@ public:
 	// instance will take over the memory management from there.
 	void addCategory(LLViewerInventoryCategory* category);
 	void addItem(LLViewerInventoryItem* item);
-
-	// methods to load up inventory skeleton & meat. These are used
-	// during authentication. return true if everything parsed.
-	typedef std::map<std::string, std::string> response_t;
-	typedef std::vector<response_t> options_t;
-
-
-	//OGPX really screwed with the login process. This is needed until it's all sorted out.
-	bool loadSkeleton(const options_t& options, const LLUUID& owner_id);
+	
 /**                    Mutators
  **                                                                            **
  *******************************************************************************/
@@ -568,12 +560,14 @@ protected:
 private:
 	std::map<LLUUID, bool> mCategoryLock;
 	std::map<LLUUID, bool> mItemLock;
-
-
+	
+	//--------------------------------------------------------------------
+	// Debugging
+	//--------------------------------------------------------------------
 public:
 	// *NOTE: DEBUG functionality
 	void dumpInventory() const;
-	
+
 /**                    Miscellaneous
  **                                                                            **
  *******************************************************************************/
