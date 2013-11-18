@@ -835,7 +835,7 @@ protected:
 	// Only used for building titles.
 	BOOL			isGroupMember() const 		{ return !mGroupID.isNull(); } 
 public:
-	LLDynamicArray<LLGroupData> mGroups;
+	std::vector<LLGroupData> mGroups;
 
 	//--------------------------------------------------------------------
 	// Group Title

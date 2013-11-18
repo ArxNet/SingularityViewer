@@ -3044,12 +3044,12 @@ void LLFloaterLand::open()
 		if ( (idOwner != gAgent.getID()) )
 		{
 			// *sighs* LLAgent::hasPowerInGroup() has it too so copy/paste from there
-			S32 count = gAgent.mGroups.count(); bool fShow = false;
-			for (S32 i = 0; i < count; ++i)
+			std::size_t count = gAgent.mGroups.size(); bool fShow = false;
+			for (std::size_t i = 0; i < count; ++i)
 			{
-				if (gAgent.mGroups.get(i).mID == idOwner)
+				if (gAgent.mGroups[i].mID == idOwner)
 				{
-					fShow |= ((gAgent.mGroups.get(i).mPowers & GP_LAND_RETURN) > 0);
+					fShow |= ((gAgent.mGroups[i].mPowers & GP_LAND_RETURN) > 0);
 					break;
 				}
 			}

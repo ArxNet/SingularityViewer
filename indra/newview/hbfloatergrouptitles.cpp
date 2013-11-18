@@ -161,14 +161,13 @@ void HBFloaterGroupTitles::onActivate(void* userdata)
 
 void update_titles_list(HBFloaterGroupTitles* self)
 {
-	S32 i;
-	S32 count = gAgent.mGroups.count();
+	std::size_t i;
+	std::size_t count = gAgent.mGroups.size();
 	LLUUID id;
 	LLUUID highlight_id = LLUUID::null;
-	LLUUID current_group_id = gAgent.getGroupID();
+	const LLUUID& current_group_id = gAgent.getGroupID();
 	std::vector<LLGroupTitle>::const_iterator citer;
 	std::string style;
-	LLGroupData* group_datap;
 	LLGroupMgrGroupData* gmgr_datap;
 
 	if (!self || !self->mTitlesList) return;
@@ -178,8 +177,7 @@ void update_titles_list(HBFloaterGroupTitles* self)
 
 	for (i = 0; i < count; ++i)
 	{
-		group_datap = &gAgent.mGroups.get(i);
-		id = group_datap->mID;
+		id = gAgent.mGroups[i].mID;
 		if (self->mFirstUse)
 		{
 			HBFloaterGroupTitlesObserver* observer = new HBFloaterGroupTitlesObserver(self, id);
@@ -205,7 +203,7 @@ void update_titles_list(HBFloaterGroupTitles* self)
 			element["columns"][LIST_TITLE]["value"] = citer->mTitle;
 			element["columns"][LIST_TITLE]["font-style"] = style;
 			element["columns"][LIST_GROUP_NAME]["column"] = "group_name";
-			element["columns"][LIST_GROUP_NAME]["value"] = group_datap->mName;
+			element["columns"][LIST_GROUP_NAME]["value"] = gAgent.mGroups[i].mName;
 			element["columns"][LIST_GROUP_NAME]["font-style"] = style;
 			element["columns"][LIST_GROUP_ID]["column"] = "group_id";
 			element["columns"][LIST_GROUP_ID]["value"] = id;

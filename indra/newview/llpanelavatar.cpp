@@ -249,7 +249,7 @@ void LLPanelAvatarSecondLife::processProperties(void* data, EAvatarProcessorType
 				if (pAvatarGroups->avatar_id == pAvatarGroups->agent_id) // own avatar
 				{
 					// Search for this group in the agent's groups list
-					LLDynamicArray<LLGroupData>::iterator i;
+					std::vector<LLGroupData>::iterator i;
 
 					for (i = gAgent.mGroups.begin(); i != gAgent.mGroups.end(); i++)
 					{
@@ -1633,12 +1633,12 @@ void LLPanelAvatar::resetGroupList()
 
 			group_list->deleteAllItems();
 			
-			S32 count = gAgent.mGroups.count();
+			const std::size_t count = gAgent.mGroups.size();
 			LLUUID id;
 			
-			for(S32 i = 0; i < count; ++i)
+			for (std::size_t i = 0; i < count; ++i)
 			{
-				LLGroupData group_data = gAgent.mGroups.get(i);
+				LLGroupData group_data = gAgent.mGroups[i];
 				id = group_data.mID;
 				std::string group_string;
 				/* Show group title?  DUMMY_POWER for Don Grep
@@ -1656,7 +1656,7 @@ void LLPanelAvatar::resetGroupList()
 
 				LLSD row;
 
-				row["id"] = id ;
+				row["id"] = id;
 				row["columns"][0]["value"] = group_string;
 				row["columns"][0]["font"] = "SANSSERIF_SMALL";
 				std::string font_style = group_data.mListInProfile ? "BOLD" : "NORMAL";

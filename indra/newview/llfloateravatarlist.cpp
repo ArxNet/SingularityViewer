@@ -1336,9 +1336,9 @@ void LLFloaterAvatarList::sendKeys()
 	std::ostringstream ids;
 	int num_ids = 0;
 
-	for (int i = 0; i < regionp->mMapAvatarIDs.count(); ++i)
+	for (std::size_t i = 0; i < regionp->mMapAvatarIDs.size(); ++i)
 	{
-		const LLUUID &id = regionp->mMapAvatarIDs.get(i);
+		const LLUUID &id = regionp->mMapAvatarIDs[i];
 
 		ids << "," << id;
 		++num_ids;

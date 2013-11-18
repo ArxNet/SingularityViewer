@@ -38,7 +38,6 @@
 // Library includes
 #include "llgl.h"
 #include "llrender.h"
-#include "lldarray.h"
 
 // Viewer includes
 #include "llviewercontrol.h"

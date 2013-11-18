@@ -108,19 +108,17 @@ BOOL LLFloaterLandHoldings::postBuild()
 	LLCtrlListInterface *list = grant_list->getListInterface();
 	if (!list) return TRUE;
 
-	S32 count = gAgent.mGroups.count();
-	for(S32 i = 0; i < count; ++i)
+	std::size_t count = gAgent.mGroups.size();
+	for (std::size_t i = 0; i < count; ++i)
 	{
-		LLUUID id(gAgent.mGroups.get(i).mID);
-
 		LLSD element;
-		element["id"] = id;
+		element["id"] = gAgent.mGroups[i].mID;
 		element["columns"][0]["column"] = "group";
-		element["columns"][0]["value"] = gAgent.mGroups.get(i).mName;
+		element["columns"][0]["value"] = gAgent.mGroups[i].mName;
 		element["columns"][0]["font"] = "SANSSERIF";
 
 		LLUIString areastr = getString("area_string");
-		areastr.setArg("[AREA]", llformat("%d", gAgent.mGroups.get(i).mContribution));
+		areastr.setArg("[AREA]", llformat("%d", gAgent.mGroups[i].mContribution));
 		element["columns"][1]["column"] = "area";
 		element["columns"][1]["value"] = areastr;
 		element["columns"][1]["font"] = "SANSSERIF";

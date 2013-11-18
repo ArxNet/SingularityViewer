@@ -2895,10 +2895,10 @@ BOOL LLAgent::isInGroup(const LLUUID& group_id, BOOL ignore_god_mode /* FALSE */
 	if (!ignore_god_mode && isGodlike())
 		return true;
 
-	S32 count = mGroups.count();
-	for(S32 i = 0; i < count; ++i)
+	std::size_t count = mGroups.size();
+	for (std::size_t i = 0; i < count; ++i)
 	{
-		if(mGroups.get(i).mID == group_id)
+		if(mGroups[i].mID == group_id)
 		{
 			return TRUE;
 		}
@@ -2915,12 +2915,12 @@ BOOL LLAgent::hasPowerInGroup(const LLUUID& group_id, U64 power) const
 	// GP_NO_POWERS can also mean no power is enough to grant an ability.
 	if (GP_NO_POWERS == power) return FALSE;
 
-	S32 count = mGroups.count();
-	for(S32 i = 0; i < count; ++i)
+	std::size_t count = mGroups.size();
+	for (std::size_t i = 0; i < count; ++i)
 	{
-		if(mGroups.get(i).mID == group_id)
+		if(mGroups[i].mID == group_id)
 		{
-			return (BOOL)((mGroups.get(i).mPowers & power) > 0);
+			return (BOOL)((mGroups[i].mPowers & power) > 0);
 		}
 	}
 	return FALSE;
@@ -2936,12 +2936,12 @@ U64 LLAgent::getPowerInGroup(const LLUUID& group_id) const
 	if (isGodlike())
 		return GP_ALL_POWERS;
 	
-	S32 count = mGroups.count();
-	for(S32 i = 0; i < count; ++i)
+	std::size_t count = mGroups.size();
+	for (std::size_t i = 0; i < count; ++i)
 	{
-		if(mGroups.get(i).mID == group_id)
+		if(mGroups[i].mID == group_id)
 		{
-			return (mGroups.get(i).mPowers);
+			return (mGroups[i].mPowers);
 		}
 	}
 
@@ -2950,12 +2950,12 @@ U64 LLAgent::getPowerInGroup(const LLUUID& group_id) const
 
 BOOL LLAgent::getGroupData(const LLUUID& group_id, LLGroupData& data) const
 {
-	S32 count = mGroups.count();
-	for(S32 i = 0; i < count; ++i)
+	std::size_t count = mGroups.size();
+	for (std::size_t i = 0; i < count; ++i)
 	{
-		if(mGroups.get(i).mID == group_id)
+		if(mGroups[i].mID == group_id)
 		{
-			data = mGroups.get(i);
+			data = mGroups[i];
 			return TRUE;
 		}
 	}
@@ -2964,12 +2964,12 @@ BOOL LLAgent::getGroupData(const LLUUID& group_id, LLGroupData& data) const
 
 S32 LLAgent::getGroupContribution(const LLUUID& group_id) const
 {
-	S32 count = mGroups.count();
-	for(S32 i = 0; i < count; ++i)
+	std::size_t count = mGroups.size();
+	for (std::size_t i = 0; i < count; ++i)
 	{
-		if(mGroups.get(i).mID == group_id)
+		if(mGroups[i].mID == group_id)
 		{
-			S32 contribution = mGroups.get(i).mContribution;
+			S32 contribution = mGroups[i].mContribution;
 			return contribution;
 		}
 	}
@@ -2978,12 +2978,12 @@ S32 LLAgent::getGroupContribution(const LLUUID& group_id) const
 
 BOOL LLAgent::setGroupContribution(const LLUUID& group_id, S32 contribution)
 {
-	S32 count = mGroups.count();
-	for(S32 i = 0; i < count; ++i)
+	std::size_t count = mGroups.size();
+	for (std::size_t i = 0; i < count; ++i)
 	{
-		if(mGroups.get(i).mID == group_id)
+		if(mGroups[i].mID == group_id)
 		{
-			mGroups.get(i).mContribution = contribution;
+			mGroups[i].mContribution = contribution;
 			LLMessageSystem* msg = gMessageSystem;
 			msg->newMessage("SetGroupContribution");
 			msg->nextBlock("AgentData");
@@ -3001,14 +3001,13 @@ BOOL LLAgent::setGroupContribution(const LLUUID& group_id, S32 contribution)
 
 BOOL LLAgent::setUserGroupFlags(const LLUUID& group_id, BOOL accept_notices, BOOL list_in_profile)
 {
-	S32 count = mGroups.count();
-	for(S32 i = 0; i < count; ++i)
+	std::size_t count = mGroups.size();
+	for (std::size_t i = 0; i < count; ++i)
 	{
-		LLGroupData &group = mGroups.get(i);
-		if(group.mID == group_id)
+		if(mGroups[i].mID == group_id)
 		{
-			group.mAcceptNotices = accept_notices;
-			group.mListInProfile = list_in_profile;
+			mGroups[i].mAcceptNotices = accept_notices;
+			mGroups[i].mListInProfile = list_in_profile;
 			LLMessageSystem* msg = gMessageSystem;
 			msg->newMessage("SetGroupAcceptNotices");
 			msg->nextBlock("AgentData");
@@ -3021,7 +3020,7 @@ BOOL LLAgent::setUserGroupFlags(const LLUUID& group_id, BOOL accept_notices, BOO
 			msg->addBOOL("ListInProfile", list_in_profile);
 			sendReliableMessage();
 
-			update_group_floaters(group.mID);
+			update_group_floaters(mGroups[i].mID);
 
 			return TRUE;
 		}
@@ -3377,10 +3376,10 @@ void LLAgent::processAgentDropGroup(LLMessageSystem *msg, void **)
 	// Remove the group if it already exists remove it and add the new data to pick up changes.
 	LLGroupData gd;
 	gd.mID = group_id;
-	S32 index = gAgent.mGroups.find(gd);
-	if (index != -1)
+	std::vector<LLGroupData>::iterator found_it = std::find(gAgent.mGroups.begin(), gAgent.mGroups.end(), gd);
+	if (found_it != gAgent.mGroups.end())
 	{
-		gAgent.mGroups.remove(index);
+		gAgent.mGroups.erase(found_it);
 		if (gAgent.getGroupID() == group_id)
 		{
 			gAgent.mGroupID.setNull();
@@ -3456,10 +3455,10 @@ class LLAgentDropGroupViewerNode : public LLHTTPNode
 			// and add the new data to pick up changes.
 			LLGroupData gd;
 			gd.mID = group_id;
-			S32 index = gAgent.mGroups.find(gd);
-			if (index != -1)
+			std::vector<LLGroupData>::iterator found_it = std::find(gAgent.mGroups.begin(), gAgent.mGroups.end(), gd);
+			if (found_it != gAgent.mGroups.end())
 			{
-				gAgent.mGroups.remove(index);
+				gAgent.mGroups.erase(found_it);
 				if (gAgent.getGroupID() == group_id)
 				{
 					gAgent.mGroupID.setNull();
@@ -3515,7 +3514,6 @@ void LLAgent::processAgentGroupDataUpdate(LLMessageSystem *msg, void **)
 	
 	S32 count = msg->getNumberOfBlocksFast(_PREHASH_GroupData);
 	LLGroupData group;
-	S32 index = -1;
 	bool need_floater_update = false;
 	for(S32 i = 0; i < count; ++i)
 	{
@@ -3530,12 +3528,12 @@ void LLAgent::processAgentGroupDataUpdate(LLMessageSystem *msg, void **)
 		{
 			need_floater_update = true;
 			// Remove the group if it already exists remove it and add the new data to pick up changes.
-			index = gAgent.mGroups.find(group);
-			if (index != -1)
+			std::vector<LLGroupData>::iterator found_it = std::find(gAgent.mGroups.begin(), gAgent.mGroups.end(), group);
+			if (found_it != gAgent.mGroups.end())
 			{
-				gAgent.mGroups.remove(index);
+				gAgent.mGroups.erase(found_it);
 			}
-			gAgent.mGroups.put(group);
+			gAgent.mGroups.push_back(group);
 		}
 		if (need_floater_update)
 		{
@@ -3574,7 +3572,6 @@ class LLAgentGroupDataUpdateViewerNode : public LLHTTPNode
 		{
 
 			LLGroupData group;
-			S32 index = -1;
 			bool need_floater_update = false;
 
 			group.mID = (*iter_group)["GroupID"].asUUID();
@@ -3591,12 +3588,12 @@ class LLAgentGroupDataUpdateViewerNode : public LLHTTPNode
 			{
 				need_floater_update = true;
 				// Remove the group if it already exists remove it and add the new data to pick up changes.
-				index = gAgent.mGroups.find(group);
-				if (index != -1)
+				std::vector<LLGroupData>::iterator found_it = std::find(gAgent.mGroups.begin(), gAgent.mGroups.end(), group);
+				if (found_it != gAgent.mGroups.end())
 				{
-					gAgent.mGroups.remove(index);
+					gAgent.mGroups.erase(found_it);
 				}
-				gAgent.mGroups.put(group);
+				gAgent.mGroups.push_back(group);
 			}
 			if (need_floater_update)
 			{
@@ -4482,11 +4479,12 @@ void LLAgent::fidget()
 
 void LLAgent::stopFidget()
 {
-	LLDynamicArray<LLUUID> anims;
-	anims.put(ANIM_AGENT_STAND_1);
-	anims.put(ANIM_AGENT_STAND_2);
-	anims.put(ANIM_AGENT_STAND_3);
-	anims.put(ANIM_AGENT_STAND_4);
+	std::vector<LLUUID> anims;
+	anims.reserve(4);
+	anims.push_back(ANIM_AGENT_STAND_1);
+	anims.push_back(ANIM_AGENT_STAND_2);
+	anims.push_back(ANIM_AGENT_STAND_3);
+	anims.push_back(ANIM_AGENT_STAND_4);
 
 	gAgent.sendAnimationRequests(anims, ANIM_REQUEST_STOP);
 }

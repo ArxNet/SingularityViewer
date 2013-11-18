@@ -37,7 +37,6 @@
 #ifndef LL_LLFLOATERWORLDMAP_H
 #define LL_LLFLOATERWORLDMAP_H
 
-#include "lldarray.h"
 #include "llfloater.h"
 #include "llhudtext.h"
 #include "llmapimagetype.h"
@@ -169,8 +168,8 @@ private:
 	// enable/disable teleport destination coordinates 
 	void enableTeleportCoordsDisplay( bool enabled );
 
-	LLDynamicArray<LLUUID>	mLandmarkAssetIDList;
-	LLDynamicArray<LLUUID>	mLandmarkItemIDList;
+	std::vector<LLUUID>	mLandmarkAssetIDList;
+	std::vector<LLUUID>	mLandmarkItemIDList;
 
 	static const LLUUID	sHomeID;
 

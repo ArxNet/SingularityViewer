@@ -666,7 +666,7 @@ bool join_group_response(const LLSD& notification, const LLSD& response)
 		S32 max_groups = gHippoLimits->getMaxAgentGroups();
 		if(gAgent.isInGroup(group_id)) ++max_groups;
 
-		if(gAgent.mGroups.count() < max_groups)
+		if((S32)gAgent.mGroups.size() < max_groups)
 		{
 			accept_invite = true;
 		}
@@ -7634,7 +7634,7 @@ bool handle_lure_callback(const LLSD& notification, const LLSD& response)
 
 void handle_lure(const LLUUID& invitee)
 {
-	LLDynamicArray<LLUUID> ids;
+	std::vector<LLUUID> ids;
 	ids.push_back(invitee);
 	handle_lure(ids);
 }

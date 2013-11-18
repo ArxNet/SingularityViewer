@@ -167,7 +167,7 @@ void LLGroupActions::startCall(const LLUUID& group_id)
 // static
 void LLGroupActions::join(const LLUUID& group_id)
 {
-	if (gAgent.mGroups.count() >= gHippoLimits->getMaxAgentGroups()) //!gAgent.canJoinGroups()
+	if ((S32)gAgent.mGroups.size() >= gHippoLimits->getMaxAgentGroups()) //!gAgent.canJoinGroups()
 	{
 		LLNotificationsUtil::add("JoinedTooManyGroups");
 		return;
@@ -230,20 +230,17 @@ void LLGroupActions::leave(const LLUUID& group_id)
 		return;
 // [/RLVa:KB]
 
-	S32 count = gAgent.mGroups.count();
-	S32 i;
-	for (i = 0; i < count; ++i)
+	for (std::size_t i = 0; i < gAgent.mGroups.size(); ++i)
 	{
-		if(gAgent.mGroups.get(i).mID == group_id)
+		if (gAgent.mGroups[i].mID == group_id)
+		{
+			LLSD args;
+			args["GROUP"] = gAgent.mGroups[i].mName;
+			LLSD payload;
+			payload["group_id"] = group_id;
+			LLNotificationsUtil::add("GroupLeaveConfirmMember", args, payload, onLeaveGroup);
 			break;
-	}
-	if (i < count)
-	{
-		LLSD args;
-		args["GROUP"] = gAgent.mGroups.get(i).mName;
-		LLSD payload;
-		payload["group_id"] = group_id;
-		LLNotificationsUtil::add("GroupLeaveConfirmMember", args, payload, onLeaveGroup);
+		}
 	}
 }
 

@@ -36,13 +36,8 @@
 // Responsible for managing all HUD elements.
 
 #include "llhudobject.h"
-#include "lldarray.h"
 
-class LLViewerObject;
 class LLHUDEffect;
-//Ventrella 9/16/05
-class LLHUDAnimalControls;
-// End Ventrella
 class LLMessageSystem;
 
 class LLHUDManager : public LLSingleton<LLHUDManager>
@@ -65,7 +60,7 @@ public:
 	static LLColor4 sChildColor;
 
 protected:
-	LLDynamicArray<LLPointer<LLHUDEffect>, 32 > mHUDEffects;
+	std::vector<LLPointer<LLHUDEffect> > mHUDEffects;
 };
 
 #endif // LL_LLHUDMANAGER_H

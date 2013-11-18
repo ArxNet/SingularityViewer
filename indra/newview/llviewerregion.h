@@ -38,7 +38,6 @@
 #include <string>
 #include <boost/signals2.hpp>
 
-#include "lldarray.h"
 #include "llwind.h"
 #include "llcloud.h"
 #include "llstat.h"
@@ -399,8 +398,8 @@ public:
 	// messaging system in which the previous message only sends and parses the 
 	// positions stored in the first array so they're maintained separately until 
 	// we stop supporting the old CoarseLocationUpdate message.
-	LLDynamicArray<U32> mMapAvatars;
-	LLDynamicArray<LLUUID> mMapAvatarIDs;
+	std::vector<U32> mMapAvatars;
+	std::vector<LLUUID> mMapAvatarIDs;
 
 private:
 	LLViewerRegionImpl * mImpl;
@@ -452,8 +451,8 @@ private:
 	BOOL									mCacheLoaded;
 	BOOL                                    mCacheDirty;
 
-	LLDynamicArray<U32>						mCacheMissFull;
-	LLDynamicArray<U32>						mCacheMissCRC;
+	std::vector<U32>						mCacheMissFull;
+	std::vector<U32>						mCacheMissCRC;
 
 	bool	mAlive;					// can become false if circuit disconnects
 	bool	mCapabilitiesReceived;

@@ -1556,13 +1556,13 @@ void LLWorld::getAvatars(std::vector<LLUUID>* avatar_ids, std::vector<LLVector3d
 	{
 		LLViewerRegion* regionp = *iter;
 		const LLVector3d& origin_global = regionp->getOriginGlobal();
-		S32 count = regionp->mMapAvatars.count();
-		for (S32 i = 0; i < count; i++)
+		std::size_t count = regionp->mMapAvatars.size();
+		for (std::size_t i = 0; i < count; i++)
 		{
-			LLVector3d pos_global = unpackLocalToGlobalPosition(regionp->mMapAvatars.get(i), origin_global);
+			LLVector3d pos_global = unpackLocalToGlobalPosition(regionp->mMapAvatars.at(i), origin_global);
 			if(dist_vec_squared(pos_global, relative_to) <= radius_squared)
 			{
-				LLUUID uuid = regionp->mMapAvatarIDs.get(i);
+				LLUUID uuid = regionp->mMapAvatarIDs.at(i);
 				// if this avatar doesn't already exist in the list, add it
 				if(uuid.notNull() && avatar_ids != NULL && std::find(avatar_ids->begin(), avatar_ids->end(), uuid) == avatar_ids->end())
 				{
