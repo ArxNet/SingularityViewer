@@ -174,21 +174,21 @@ public:
 	virtual void   	 	 	idleUpdate(LLAgent &agent, LLWorld &world, const F64 &time);
 	/*virtual*/ BOOL   	 	 	updateLOD();
 	BOOL  	 	 	 	 	updateJointLODs();
-	void						updateLODRiggedAttachments( void );
+	void					updateLODRiggedAttachments( void );
 	/*virtual*/ BOOL   	 	 	isActive() const; // Whether this object needs to do an idleUpdate.
 	S32 						totalTextureMemForUUIDS(std::set<LLUUID>& ids);
-	bool 						allTexturesCompletelyDownloaded(std::set<LLUUID>& ids) const;
-	bool 						allLocalTexturesCompletelyDownloaded() const;
-	bool 						allBakedTexturesCompletelyDownloaded() const;
-	void 						bakedTextureOriginCounts(S32 &sb_count, S32 &host_count,
-														 S32 &both_count, S32 &neither_count);
-	std::string 				bakedTextureOriginInfo();
-	void 						collectLocalTextureUUIDs(std::set<LLUUID>& ids) const;
-	void 						collectBakedTextureUUIDs(std::set<LLUUID>& ids) const;
-	void 						collectTextureUUIDs(std::set<LLUUID>& ids);
-	void						releaseOldTextures();
+	bool 					allTexturesCompletelyDownloaded(std::set<LLUUID>& ids) const;
+	bool 					allLocalTexturesCompletelyDownloaded() const;
+	bool 					allBakedTexturesCompletelyDownloaded() const;
+	void 					bakedTextureOriginCounts(S32 &sb_count, S32 &host_count,
+													 S32 &both_count, S32 &neither_count);
+	std::string 			bakedTextureOriginInfo();
+	void 					collectLocalTextureUUIDs(std::set<LLUUID>& ids) const;
+	void 					collectBakedTextureUUIDs(std::set<LLUUID>& ids) const;
+	void 					collectTextureUUIDs(std::set<LLUUID>& ids);
+	void					releaseOldTextures();
 	/*virtual*/ void   	 	 	updateTextures();
-	LLViewerFetchedTexture*		getBakedTextureImage(const U8 te, const LLUUID& uuid);
+	LLViewerFetchedTexture*	getBakedTextureImage(const U8 te, const LLUUID& uuid);
 	/*virtual*/ S32    	 	 	setTETexture(const U8 te, const LLUUID& uuid); // If setting a baked texture, need to request it from a non-local sim.
 	/*virtual*/ void   	 	 	onShift(const LLVector4a& shift_vector);
 	/*virtual*/ U32    	 	 	getPartitionType() const;
@@ -906,8 +906,8 @@ public:
 	/*virtual*/ std::string		getFullname() const; // Returns "FirstName LastName"
 	std::string		avString() const; // Frequently used string in log messages "Avatar '<full name'"
 protected:
-	static void		getAnimLabels(LLDynamicArray<std::string>* labels);
-	static void		getAnimNames(LLDynamicArray<std::string>* names);	
+	static void		getAnimLabels(std::vector<std::string>* labels);
+	static void		getAnimNames(std::vector<std::string>* names);	
 private:
 	std::string		mNameString;		// UTF-8 title + name + status
 	std::string  	mTitle;

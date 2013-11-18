@@ -8043,30 +8043,32 @@ void LLVOAvatar::processAvatarAppearance( LLMessageSystem* mesgsys )
 }
 
 // static
-void LLVOAvatar::getAnimLabels( LLDynamicArray<std::string>* labels )
+void LLVOAvatar::getAnimLabels( std::vector<std::string>* labels )
 {
 	S32 i;
+	labels->reserve(gUserAnimStatesCount);
 	for( i = 0; i < gUserAnimStatesCount; i++ )
 	{
-		labels->put( LLAnimStateLabels::getStateLabel( gUserAnimStates[i].mName ) );
+		labels->push_back( LLAnimStateLabels::getStateLabel( gUserAnimStates[i].mName ) );
 	}
 
 	// Special case to trigger away (AFK) state
-	labels->put( "Away From Keyboard" );
+	labels->push_back( "Away From Keyboard" );
 }
 
 // static 
-void LLVOAvatar::getAnimNames( LLDynamicArray<std::string>* names )
+void LLVOAvatar::getAnimNames( std::vector<std::string>* names )
 {
 	S32 i;
 
+	names->reserve(gUserAnimStatesCount);
 	for( i = 0; i < gUserAnimStatesCount; i++ )
 	{
-		names->put( std::string(gUserAnimStates[i].mName) );
+		names->push_back( std::string(gUserAnimStates[i].mName) );
 	}
 
 	// Special case to trigger away (AFK) state
-	names->put( "enter_away_from_keyboard_state" );
+	names->push_back( "enter_away_from_keyboard_state" );
 }
 
 // static

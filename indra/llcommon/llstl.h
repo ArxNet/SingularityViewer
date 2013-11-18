@@ -176,6 +176,49 @@ struct CopyNewPointer
 	}
 };
 
+template<typename T, typename ALLOC>
+void delete_and_clear(std::list<T*, ALLOC>& list)
+{
+	std::for_each(list.begin(), list.end(), DeletePointer());
+	list.clear();
+}
+
+template<typename T, typename ALLOC>
+void delete_and_clear(std::vector<T*, ALLOC>& vector)
+{
+	std::for_each(vector.begin(), vector.end(), DeletePointer());
+	vector.clear();
+}
+
+template<typename T, typename COMPARE, typename ALLOC>
+void delete_and_clear(std::set<T*, COMPARE, ALLOC>& set)
+{
+	std::for_each(set.begin(), set.end(), DeletePointer());
+	set.clear();
+}
+
+template<typename K, typename V, typename COMPARE, typename ALLOC>
+void delete_and_clear(std::map<K, V*, COMPARE, ALLOC>& map)
+{
+	std::for_each(map.begin(), map.end(), DeletePairedPointer());
+	map.clear();
+}
+
+template<typename T>
+void delete_and_clear(T*& ptr)
+{
+	delete ptr;
+	ptr = NULL;
+}
+
+
+template<typename T>
+void delete_and_clear_array(T*& ptr)
+{
+	delete[] ptr;
+	ptr = NULL;
+}
+
 // helper function which returns true if key is in inmap.
 template <typename T>
 //Singu note: This has been generalized to support a broader range of map-esque containers

@@ -365,9 +365,9 @@ void WavefrontSaver::Add(const LLVOAvatar* av_vo) //adds attachments, too!
 			LLViewerObject* o = *itero;
 			if (!o) continue;
 
-			LLDynamicArray<LLViewerObject*> prims = LLDynamicArray<LLViewerObject*>();
+			std::vector<LLViewerObject*> prims;
 			o->addThisAndAllChildren(prims);
-			for (LLDynamicArray<LLViewerObject*>::iterator iterc = prims.begin(); iterc != prims.end(); ++iterc)
+			for (std::vector<LLViewerObject*>::iterator iterc = prims.begin(); iterc != prims.end(); ++iterc)
 			{
 				const LLViewerObject* c = *iterc;
 				if (!c) continue;
