@@ -317,7 +317,7 @@ void LLAvatarJointMesh::setMesh( LLPolyMesh *mesh )
 		setupJoint((LLAvatarJoint*)getRoot());
 	}
 
-//	llinfos << "joint render entries: " << mMesh->mJointRenderData.count() << llendl;
+//	llinfos << "joint render entries: " << mMesh->mJointRenderData.size() << llendl;
 }
 
 //-----------------------------------------------------------------------------
@@ -329,6 +329,7 @@ void LLAvatarJointMesh::setupJoint(LLAvatarJoint* current_joint)
 
 //	S32 joint_count = 0;
 	U32 sj;
+
 	for (sj=0; sj<mNumSkinJoints; sj++)
 	{
 		LLSkinJoint &js = mSkinJoints[sj];
@@ -341,21 +342,21 @@ void LLAvatarJointMesh::setupJoint(LLAvatarJoint* current_joint)
 		// we've found a skinjoint for this joint..
 
 		// is the last joint in the array our parent?
-		if(mMesh->mJointRenderData.count() && mMesh->mJointRenderData[mMesh->mJointRenderData.count() - 1]->mWorldMatrix == &current_joint->getParent()->getWorldMatrix())
+		if(mMesh->mJointRenderData.size() && mMesh->mJointRenderData[mMesh->mJointRenderData.size() - 1]->mWorldMatrix == &current_joint->getParent()->getWorldMatrix())
 		{
 			// ...then just add ourselves
 			LLAvatarJoint* jointp = js.mJoint;
-			mMesh->mJointRenderData.put(new LLJointRenderData(&jointp->getWorldMatrix(), &js));
+			mMesh->mJointRenderData.push_back(new LLJointRenderData(&jointp->getWorldMatrix(), &js));
 //			llinfos << "joint " << joint_count << js.mJoint->getName() << llendl;
 //			joint_count++;
 		}
 		// otherwise add our parent and ourselves
 		else
 		{
-			mMesh->mJointRenderData.put(new LLJointRenderData(&current_joint->getParent()->getWorldMatrix(), NULL));
+			mMesh->mJointRenderData.push_back(new LLJointRenderData(&current_joint->getParent()->getWorldMatrix(), NULL));
 //			llinfos << "joint " << joint_count << current_joint->getParent()->getName() << llendl;
 //			joint_count++;
-			mMesh->mJointRenderData.put(new LLJointRenderData(&current_joint->getWorldMatrix(), &js));
+			mMesh->mJointRenderData.push_back(new LLJointRenderData(&current_joint->getWorldMatrix(), &js));
 //			llinfos << "joint " << joint_count << current_joint->getName() << llendl;
 //			joint_count++;
 		}

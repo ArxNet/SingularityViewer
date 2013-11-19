@@ -452,7 +452,7 @@ class LLBeginIMSession : public inventory_panel_listener_t
 		std::string name;
 		static int session_num = 1;
 
-		LLDynamicArray<LLUUID> members;
+		std::vector<LLUUID> members;
 		EInstantMessage type = IM_SESSION_CONFERENCE_START;
 
 		for (std::set<LLUUID>::const_iterator iter = selected_items.begin(); iter != selected_items.end(); iter++)
@@ -493,7 +493,7 @@ class LLBeginIMSession : public inventory_panel_listener_t
 							id = item_array.at(i)->getCreatorUUID();
 							if(at.isBuddyOnline(id))
 							{
-								members.put(id);
+								members.push_back(id);
 							}
 						}
 					}
@@ -515,7 +515,7 @@ class LLBeginIMSession : public inventory_panel_listener_t
 
 							if(at.isBuddyOnline(id))
 							{
-								members.put(id);
+								members.push_back(id);
 							}
 						}
 					} //if IT_CALLINGCARD

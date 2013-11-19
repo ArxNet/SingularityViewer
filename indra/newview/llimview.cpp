@@ -604,8 +604,8 @@ LLUUID LLIMMgr::addSession(
 	LLFloaterIMPanel* floater = findFloaterBySession(session_id);
 	if(!floater)
 	{
-		LLDynamicArray<LLUUID> ids;
-		ids.put(other_participant_id);
+		std::vector<LLUUID> ids;
+		ids.push_back(other_participant_id);
 
 		floater = createFloater(session_id, other_participant_id, name, dialog, ids, true);
 
@@ -648,9 +648,9 @@ LLUUID LLIMMgr::addSession(
 	const std::string& name,
 	EInstantMessage dialog,
 	const LLUUID& other_participant_id,
-	const LLDynamicArray<LLUUID>& ids)
+	const std::vector<LLUUID>& ids)
 {
-	if (0 == ids.getLength())
+	if (0 == ids.size())
 	{
 		return LLUUID::null;
 	}
@@ -1039,7 +1039,7 @@ LLFloaterIMPanel* LLIMMgr::createFloater(
 	const LLUUID& other_participant_id,
 	const std::string& session_label,
 	const EInstantMessage& dialog,
-	const LLDynamicArray<LLUUID>& ids,
+	const std::vector<LLUUID>& ids,
 	bool user_initiated)
 {
 	if (session_id.isNull())
@@ -1077,9 +1077,9 @@ LLFloaterIMPanel* LLIMMgr::createFloater(
 
 void LLIMMgr::noteOfflineUsers(
 	LLFloaterIMPanel* floater,
-	const LLDynamicArray<LLUUID>& ids)
+	const std::vector<LLUUID>& ids)
 {
-	S32 count = ids.count();
+	S32 count = ids.size();
 	if(count == 0)
 	{
 		const std::string& only_user = LLTrans::getString("only_user_message");
@@ -1091,11 +1091,11 @@ void LLIMMgr::noteOfflineUsers(
 		LLAvatarTracker& at = LLAvatarTracker::instance();
 		for(S32 i = 0; i < count; ++i)
 		{
-			info = at.getBuddyInfo(ids.get(i));
+			info = at.getBuddyInfo(ids.at(i));
 			std::string full_name;
 			if (info
 				&& !info->isOnline()
-				&& LLAvatarNameCache::getPNSName(ids.get(i), full_name))
+				&& LLAvatarNameCache::getPNSName(ids.at(i), full_name))
 			{
 				LLUIString offline = LLTrans::getString("offline_message");
 				offline.setArg("[NAME]", full_name);
@@ -1106,7 +1106,7 @@ void LLIMMgr::noteOfflineUsers(
 }
 
 void LLIMMgr::noteMutedUsers(LLFloaterIMPanel* floater,
-								  const LLDynamicArray<LLUUID>& ids)
+								  const std::vector<LLUUID>& ids)
 {
 	// Don't do this if we don't have a mute list.
 	LLMuteList *ml = LLMuteList::getInstance();
@@ -1115,12 +1115,12 @@ void LLIMMgr::noteMutedUsers(LLFloaterIMPanel* floater,
 		return;
 	}
 
-	S32 count = ids.count();
+	S32 count = ids.size();
 	if(count > 0)
 	{
 		for(S32 i = 0; i < count; ++i)
 		{
-			if( ml->isMuted(ids.get(i)) )
+			if( ml->isMuted(ids.at(i)) )
 			{
 				LLUIString muted = LLTrans::getString("muted_message");
 

@@ -547,13 +547,13 @@ BOOL LLPolyMeshSharedData::loadMesh( const std::string& fileName )
 //			S32 j;
 //			for(j = 0; j < 3; j++)
 //			{
-//				LLDynamicArray<S32> *face_list = mVertFaceMap.getIfThere(face[j]);
+//				std::vector<S32> *face_list = mVertFaceMap.getIfThere(face[j]);
 //				if (!face_list)
 //				{
-//					face_list = new LLDynamicArray<S32>;
+//					face_list = new std::vector<S32>;
 //					mVertFaceMap.addData(face[j], face_list);
 //				}
-//				face_list->put(i);
+//				face_list->push_back(i);
 //			}
 
 			numTris++;
@@ -808,15 +808,8 @@ LLPolyMesh::LLPolyMesh(LLPolyMeshSharedData *shared_data, LLPolyMesh *reference_
 //-----------------------------------------------------------------------------
 LLPolyMesh::~LLPolyMesh()
 {
-	S32 i;
-	for (i = 0; i < mJointRenderData.count(); i++)
-	{
-		delete mJointRenderData[i];
-                mJointRenderData[i] = NULL;
-        }
-
-		ll_aligned_free_16(mVertexData);
-
+	delete_and_clear(mJointRenderData);
+	ll_aligned_free_16(mVertexData);
 }
 
 

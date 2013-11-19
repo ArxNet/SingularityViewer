@@ -263,8 +263,7 @@ void LLAvatarActions::startAdhocCall(const uuid_vec_t& ids)
 		return;
 	}
 
-	// convert vector into LLDynamicArray for addSession
-	LLDynamicArray<LLUUID> id_array;
+	std::vector<LLUUID> id_array;
 	for (uuid_vec_t::const_iterator it = ids.begin(); it != ids.end(); ++it)
 	{
 // [RLVa:KB] - Checked: 2011-04-11 (RLVa-1.3.0h) | Added: RLVa-1.3.0h

@@ -137,7 +137,7 @@ public:
 		// 'LLMortician::sDestroyImmediate == FALSE' while the viewer is running the destructor won't be 
 		// called right away
 		//
-		// Result: we can't call close() on the last (sActiveViews.count() will still be > 1) because
+		// Result: we can't call close() on the last (sActiveViews.size() will still be > 1) because
 		//         onClose() would take the wrong branch and destroy() it as well
 		//
 		// Workaround: "fix" onClose() to count only views that aren't marked as "dead"

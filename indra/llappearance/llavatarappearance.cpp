@@ -37,7 +37,6 @@
 #include "llavatarjointmesh.h"
 #include "llstl.h"
 #include "lldir.h"
-#include "lldeleteutils.h"
 #include "llpolymorph.h"
 #include "llpolymesh.h"
 #include "llpolyskeletaldistortion.h"
@@ -134,9 +133,9 @@ LLAvatarAppearance::LLAvatarXmlInfo::~LLAvatarXmlInfo()
 	std::for_each(mMeshInfoList.begin(), mMeshInfoList.end(), DeletePointer());
 	std::for_each(mSkeletalDistortionInfoList.begin(), mSkeletalDistortionInfoList.end(), DeletePointer());		
 	std::for_each(mAttachmentInfoList.begin(), mAttachmentInfoList.end(), DeletePointer());
-	deleteAndClear(mTexSkinColorInfo);
-	deleteAndClear(mTexHairColorInfo);
-	deleteAndClear(mTexEyeColorInfo);
+	delete_and_clear(mTexSkinColorInfo);
+	delete_and_clear(mTexHairColorInfo);
+	delete_and_clear(mTexEyeColorInfo);
 	std::for_each(mLayerInfoList.begin(), mLayerInfoList.end(), DeletePointer());		
 	std::for_each(mDriverInfoList.begin(), mDriverInfoList.end(), DeletePointer());
 	std::for_each(mMorphMaskInfoList.begin(), mMorphMaskInfoList.end(), DeletePointer());
@@ -268,13 +267,13 @@ void LLAvatarAppearance::initInstance()
 // virtual
 LLAvatarAppearance::~LLAvatarAppearance()
 {
-	deleteAndClear(mTexSkinColor);
-	deleteAndClear(mTexHairColor);
-	deleteAndClear(mTexEyeColor);
+	delete_and_clear(mTexSkinColor);
+	delete_and_clear(mTexHairColor);
+	delete_and_clear(mTexEyeColor);
 
 	for (U32 i = 0; i < mBakedTextureDatas.size(); i++)
 	{
-		deleteAndClear(mBakedTextureDatas[i].mTexLayerSet);
+		delete_and_clear(mBakedTextureDatas[i].mTexLayerSet);
 		mBakedTextureDatas[i].mJointMeshes.clear();
 
 		for (morph_list_t::iterator iter2 = mBakedTextureDatas[i].mMaskedMorphs.begin();
@@ -286,11 +285,11 @@ LLAvatarAppearance::~LLAvatarAppearance()
 	}
 
 	if (mRoot) mRoot->removeAllChildren();
-	deleteAndClear(mRoot);
+	delete_and_clear(mRoot);
 	mJointMap.clear();
 
 	clearSkeleton();
-	deleteAndClearArray(mCollisionVolumes);
+	delete_and_clear_array(mCollisionVolumes);
 
 	std::for_each(mPolyMeshes.begin(), mPolyMeshes.end(), DeletePairedPointer());
 	mPolyMeshes.clear();
@@ -385,7 +384,7 @@ void LLAvatarAppearance::initClass()
 	// parse avatar_lad.xml
 	if (sAvatarXmlInfo)
 	{ //this can happen if a login attempt failed
-		deleteAndClear(sAvatarXmlInfo);
+		delete_and_clear(sAvatarXmlInfo);
 	}
 	sAvatarXmlInfo = new LLAvatarXmlInfo;
 	if (!sAvatarXmlInfo->parseXmlSkeletonNode(root))
@@ -416,8 +415,8 @@ void LLAvatarAppearance::initClass()
 
 void LLAvatarAppearance::cleanupClass()
 {
-	deleteAndClear(sAvatarXmlInfo);
-	deleteAndClear(sAvatarSkeletonInfo);
+	delete_and_clear(sAvatarXmlInfo);
+	delete_and_clear(sAvatarSkeletonInfo);
 	sSkeletonXMLTree.cleanup();
 	sXMLTree.cleanup();
 }
@@ -1525,7 +1524,7 @@ LLTexLayerSet* LLAvatarAppearance::getAvatarLayerSet(EBakedTextureIndex baked_in
 //-----------------------------------------------------------------------------
 BOOL LLAvatarAppearance::allocateCollisionVolumes( U32 num )
 {
-	deleteAndClearArray(mCollisionVolumes);
+	delete_and_clear_array(mCollisionVolumes);
 	mNumCollisionVolumes = 0;
 
 	mCollisionVolumes = new LLAvatarJointCollisionVolume[num];
@@ -1864,7 +1863,7 @@ BOOL LLAvatarAppearance::LLAvatarXmlInfo::parseXmlColorNodes(LLXmlTreeNode* root
 				mTexSkinColorInfo = new LLTexGlobalColorInfo;
 				if( !mTexSkinColorInfo->parseXml( color_node ) )
 				{
-					deleteAndClear(mTexSkinColorInfo);
+					delete_and_clear(mTexSkinColorInfo);
 					llwarns << "avatar file: mTexSkinColor->parseXml() failed" << llendl;
 					return FALSE;
 				}
@@ -1879,7 +1878,7 @@ BOOL LLAvatarAppearance::LLAvatarXmlInfo::parseXmlColorNodes(LLXmlTreeNode* root
 				mTexHairColorInfo = new LLTexGlobalColorInfo;
 				if( !mTexHairColorInfo->parseXml( color_node ) )
 				{
-					deleteAndClear(mTexHairColorInfo);
+					delete_and_clear(mTexHairColorInfo);
 					llwarns << "avatar file: mTexHairColor->parseXml() failed" << llendl;
 					return FALSE;
 				}

@@ -123,10 +123,8 @@ set(llcommon_HEADER_FILES
     llcoros.h
     llcrc.h
     llcriticaldamp.h
-    lldarray.h
     lldate.h
     lldefs.h
-    lldeleteutils.h
     lldependencies.h
     lldepthstack.h
     lldictionary.h
@@ -154,6 +152,7 @@ set(llcommon_HEADER_FILES
     llhash.h
     llheartbeat.h
     llhttpstatuscodes.h
+    llindexedvector.h
     llinitparam.h
     llinstancetracker.h
     llkeythrottle.h

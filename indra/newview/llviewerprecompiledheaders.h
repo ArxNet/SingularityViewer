@@ -69,13 +69,11 @@
 
 // Library headers from llcommon project:
 #include "llbitpack.h"
-#include "lldeleteutils.h"
 #include "indra_constants.h"
 #include "llinitparam.h"
 #include "llapp.h"
 #include "llapr.h"
 #include "llcriticaldamp.h"
-#include "lldarray.h"
 #include "lldefs.h"
 #include "lldepthstack.h"
 #include "llendianswizzle.h"

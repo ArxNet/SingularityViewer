@@ -2139,7 +2139,7 @@ void LLAppearanceMgr::updateAgentWearables(LLWearableHoldingPattern* holder, boo
 {
 	lldebugs << "updateAgentWearables()" << llendl;
 	LLInventoryItem::item_array_t items;
-	LLDynamicArray< LLViewerWearable* > wearables;
+	std::vector< LLViewerWearable* > wearables;
 // [RLVa:KB] - Checked: 2011-03-31 (RLVa-1.3.0f) | Added: RLVa-1.3.0f
 	uuid_vec_t idsCurrent; LLInventoryModel::item_array_t itemsNew;
 	if (rlv_handler_t::isEnabled())
