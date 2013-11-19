@@ -41,7 +41,6 @@
 
 #include "lluuid.h"
 #include "llframetimer.h"
-#include "llmap.h"
 
 class LLMessageSystem;
 class LLFloaterDirectory;
@@ -171,6 +170,6 @@ const S32 SEARCH_PG = 1;
 const S32 SEARCH_MATURE = 2;
 const S32 SEARCH_ADULT = 4;
 
-extern LLMap< const LLUUID, LLPanelDirBrowser* > gDirBrowserInstances;
+extern std::map< const LLUUID, LLPanelDirBrowser* > gDirBrowserInstances;
 
 #endif // LL_LLPANELDIRBROWSER_H

@@ -85,7 +85,7 @@ struct LLScriptQueueData
 ///----------------------------------------------------------------------------
 
 // static
-LLMap<LLUUID, LLFloaterScriptQueue*> LLFloaterScriptQueue::sInstances;
+std::map<LLUUID, LLFloaterScriptQueue*> LLFloaterScriptQueue::sInstances;
 
 
 // Default constructor
@@ -111,24 +111,28 @@ LLFloaterScriptQueue::LLFloaterScriptQueue(const std::string& name,
 	
 	mStartString = start_string;
 	mDone = FALSE;
-	sInstances.addData(mID, this);
+	sInstances.insert(std::make_pair(mID, this));
 }
 
 // Destroys the object
 LLFloaterScriptQueue::~LLFloaterScriptQueue()
 {
-	sInstances.removeData(mID);
+	sInstances.erase(mID);
 }
 
 // find an instance by ID. Return NULL if it does not exist.
 // static
 LLFloaterScriptQueue* LLFloaterScriptQueue::findInstance(const LLUUID& id)
 {
-	if(sInstances.checkData(id))
+	std::map<LLUUID, LLFloaterScriptQueue*>::const_iterator it = sInstances.find(id);
+	if (it != sInstances.end())
 	{
-		return sInstances.getData(id);
+		return it->second;
 	}
-	return NULL;
+	else
+	{
+		return NULL;
+	}
 }
 
 

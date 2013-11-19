@@ -47,7 +47,7 @@
 // Globals
 //-----------------------------------------------------------------------------
 
-LLMap< const LLUUID, LLFloaterParcelInfo* > gPlaceInfoInstances;
+std::map< const LLUUID, LLFloaterParcelInfo* > gPlaceInfoInstances;
 
 //moved to llpanelplaces.cpp in v2
 class LLParcelHandler : public LLCommandHandler
@@ -100,14 +100,14 @@ LLFloaterParcelInfo::LLFloaterParcelInfo(const std::string& name, const LLUUID &
 {
 	mFactoryMap["place_details_panel"] = LLCallbackMap(LLFloaterParcelInfo::createPanelPlace, this);
 	LLUICtrlFactory::getInstance()->buildFloater(this, "floater_preview_url.xml", &getFactoryMap());
-	gPlaceInfoInstances.addData(parcel_id, this);
+	gPlaceInfoInstances.insert(std::make_pair(parcel_id, this));
 }
 
 // virtual
 LLFloaterParcelInfo::~LLFloaterParcelInfo()
 {
 	// child views automatically deleted
-	gPlaceInfoInstances.removeData(mParcelID);
+	gPlaceInfoInstances.erase(mParcelID);
 
 }
 
@@ -125,10 +125,11 @@ LLFloaterParcelInfo* LLFloaterParcelInfo::show(const LLUUID &parcel_id)
 	}
 
 	LLFloaterParcelInfo *floater;
-	if (gPlaceInfoInstances.checkData(parcel_id))
+	std::map<const LLUUID, LLFloaterParcelInfo*>::const_iterator it = gPlaceInfoInstances.find(parcel_id);
+	if (it != gPlaceInfoInstances.end())
 	{
 		// ...bring that window to front
-		floater = gPlaceInfoInstances.getData(parcel_id);
+		floater = it->second;
 		floater->open();	/*Flawfinder: ignore*/
 		floater->setFrontmost(true);
 	}

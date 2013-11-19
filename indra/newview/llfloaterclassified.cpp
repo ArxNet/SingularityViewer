@@ -47,7 +47,7 @@
 // Globals
 //-----------------------------------------------------------------------------
 
-LLMap< const LLUUID, LLFloaterClassifiedInfo* > gClassifiedInfoInstances;
+std::map< const LLUUID, LLFloaterClassifiedInfo* > gClassifiedInfoInstances;
 ////////////////////////////////////////////////////////////////////////////
 // LLFloaterEventDisplay
 
@@ -85,13 +85,13 @@ mClassifiedID( id )
 {
 	mFactoryMap["classified_details_panel"] = LLCallbackMap(LLFloaterClassifiedInfo::createClassifiedDetail, this);
 	LLUICtrlFactory::getInstance()->buildFloater(this, "floater_preview_classified.xml", &getFactoryMap());
-	gClassifiedInfoInstances.addData(id, this);
+	gClassifiedInfoInstances.insert(std::make_pair(id, this));
 }
 
 LLFloaterClassifiedInfo::~LLFloaterClassifiedInfo()
 {
 	// child views automatically deleted
-	gClassifiedInfoInstances.removeData(mClassifiedID);
+	gClassifiedInfoInstances.erase(mClassifiedID);
 
 }
 
@@ -120,10 +120,11 @@ LLFloaterClassifiedInfo* LLFloaterClassifiedInfo::show(const LLUUID &classified_
 	}
 
 	LLFloaterClassifiedInfo *floater;
-	if (gClassifiedInfoInstances.checkData(classified_id))
+	std::map<const LLUUID, LLFloaterClassifiedInfo*>::const_iterator it = gClassifiedInfoInstances.find(classified_id);
+	if (it != gClassifiedInfoInstances.end())
 	{
 		// ...bring that window to front
-		floater = gClassifiedInfoInstances.getData(classified_id);
+		floater = it->second;
 		floater->open();	/*Flawfinder: ignore*/
 		floater->setFrontmost(true);
 	}

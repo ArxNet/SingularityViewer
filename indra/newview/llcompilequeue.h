@@ -36,13 +36,12 @@
 #include "llinventory.h"
 #include "llviewerobject.h"
 #include "llvoinventorylistener.h"
-#include "llmap.h"
 #include "lluuid.h"
-
 #include "llfloater.h"
 #include "llscrolllistctrl.h"
 
 #include "llviewerinventory.h"
+#include <map>
 #include <vector>
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Class LLFloaterScriptQueue
@@ -107,7 +106,7 @@ protected:
 	bool mDone;
 
 	LLUUID mID;
-	static LLMap<LLUUID, LLFloaterScriptQueue*> sInstances;
+	static std::map<LLUUID, LLFloaterScriptQueue*> sInstances;
 
 	std::string mStartString;
 };

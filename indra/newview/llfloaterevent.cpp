@@ -50,7 +50,7 @@
 // Globals
 //-----------------------------------------------------------------------------
 
-LLMap< U32, LLFloaterEventInfo* > gEventInfoInstances;
+std::map< U32, LLFloaterEventInfo* > gEventInfoInstances;
 
 class LLEventHandler : public LLCommandHandler
 {
@@ -82,13 +82,13 @@ LLFloaterEventInfo::LLFloaterEventInfo(const std::string& name, const U32 event_
 
 	mFactoryMap["event_details_panel"] = LLCallbackMap(LLFloaterEventInfo::createEventDetail, this);
 	LLUICtrlFactory::getInstance()->buildFloater(this, "floater_preview_event.xml", &getFactoryMap());
-	gEventInfoInstances.addData(event_id, this);
+	gEventInfoInstances.insert(std::make_pair(event_id, this));
 }
 
 LLFloaterEventInfo::~LLFloaterEventInfo()
 {
 	// child views automatically deleted
-	gEventInfoInstances.removeData(mEventID);
+	gEventInfoInstances.erase(mEventID);
 }
 
 void LLFloaterEventInfo::displayEventInfo(const U32 event_id)
@@ -111,10 +111,11 @@ void* LLFloaterEventInfo::createEventDetail(void* userdata)
 LLFloaterEventInfo* LLFloaterEventInfo::show(const U32 event_id)
 {
 	LLFloaterEventInfo *floater;
-	if (gEventInfoInstances.checkData(event_id))
+	std::map< U32, LLFloaterEventInfo* >::const_iterator it = gEventInfoInstances.find(event_id);
+	if (it != gEventInfoInstances.end())
 	{
 		// ...bring that window to front
-		floater = gEventInfoInstances.getData(event_id);
+		floater = it->second;
 		floater->open();	/*Flawfinder: ignore*/
 		floater->setFrontmost(true);
 	}
