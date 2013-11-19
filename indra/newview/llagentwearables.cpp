@@ -1046,7 +1046,7 @@ public:
 	{
 		llinfos << "One item created " << inv_item.asString() << llendl;
 		LLViewerInventoryItem *item = gInventory.getItem(inv_item);
-		mItemsToLink.put(item);
+		mItemsToLink.push_back(item);
 		updatePendingWearable(inv_item);
 	}
 	~OnWearableItemCreatedCB()
@@ -1330,7 +1330,7 @@ void LLAgentWearables::removeWearableFinal( LLWearableType::EType type, bool do_
 
 // Assumes existing wearables are not dirty.
 void LLAgentWearables::setWearableOutfit(const LLInventoryItem::item_array_t& items,
-										 const LLDynamicArray< LLViewerWearable* >& wearables,
+										 const std::vector< LLViewerWearable* >& wearables,
 										 BOOL remove)
 {
 	llinfos << "setWearableOutfit() start" << llendl;
@@ -1349,7 +1349,7 @@ void LLAgentWearables::setWearableOutfit(const LLInventoryItem::item_array_t& it
 		}
 	}
 
-	S32 count = wearables.count();
+	S32 count = wearables.size();
 	llassert(items.count() == count);
 
 	S32 i;
@@ -1654,7 +1654,7 @@ void LLAgentWearables::userUpdateAttachments(LLInventoryModel::item_array_t& obj
 
 	std::set<LLUUID> requested_item_ids;
 	std::set<LLUUID> current_item_ids;
-	for (S32 i=0; i<obj_item_array.count(); i++)
+	for (std::size_t i=0; i<obj_item_array.size(); i++)
 		requested_item_ids.insert(obj_item_array[i].get()->getLinkedUUID());
 
 	// Build up list of objects to be removed and items currently attached.
@@ -1780,12 +1780,12 @@ void LLAgentWearables::userAttachMultipleAttachments(LLInventoryModel::item_arra
 	if ( (rlv_handler_t::isEnabled()) && (sInitialAttachmentsRequested) && (gRlvAttachmentLocks.hasLockedAttachmentPoint(RLV_LOCK_ANY)) )
 	{
 		// Fall-back code: everything should really already have been pruned before we get this far
-		for (S32 idxItem = obj_item_array.count() - 1; idxItem >= 0; idxItem--)
+		for (S32 idxItem = obj_item_array.size() - 1; idxItem >= 0; idxItem--)
 		{
-			const LLInventoryItem* pItem = obj_item_array.get(idxItem).get();
+			const LLInventoryItem* pItem = obj_item_array.at(idxItem).get();
 			if (!gRlvAttachmentLocks.canAttach(pItem))
 			{
-				obj_item_array.remove(idxItem);
+				obj_item_array.erase(obj_item_array.begin() + idxItem);
 				RLV_ASSERT(false);
 			}
 		}
@@ -1793,7 +1793,7 @@ void LLAgentWearables::userAttachMultipleAttachments(LLInventoryModel::item_arra
 // [/RLVa:KB]
 
 	// Build a compound message to send all the objects that need to be rezzed.
-	S32 obj_count = obj_item_array.count();
+	S32 obj_count = obj_item_array.size();
 
 	// Limit number of packets to send
 	const S32 MAX_PACKETS_TO_SEND = 10;
@@ -1824,7 +1824,7 @@ void LLAgentWearables::userAttachMultipleAttachments(LLInventoryModel::item_arra
 			msg->addBOOLFast(_PREHASH_FirstDetachAll, false );
 		}
 
-		const LLInventoryItem* item = obj_item_array.get(i).get();
+		const LLInventoryItem* item = obj_item_array.at(i).get();
 		bool replace = !gHippoGridManager->getConnectedGrid()->supportsInvLinks();
 		msg->nextBlockFast(_PREHASH_ObjectData );
 		msg->addUUIDFast(_PREHASH_ItemID, item->getLinkedUUID());

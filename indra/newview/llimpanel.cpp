@@ -929,17 +929,17 @@ BOOL LLFloaterIMPanel::dropCategory(LLInventoryCategory* category, BOOL drop)
 										items,
 										LLInventoryModel::EXCLUDE_TRASH,
 										buddies);
-		S32 count = items.count();
+		S32 count = items.size();
 		if(count == 0)
 		{
 			rv = FALSE;
 		}
 		else if(drop)
 		{
-			LLDynamicArray<LLUUID> ids;
+			std::vector<LLUUID> ids;
 			for(S32 i = 0; i < count; ++i)
 			{
-				ids.put(items.get(i)->getCreatorUUID());
+				ids.push_back(items.at(i)->getCreatorUUID());
 			}
 			inviteToSession(ids);
 		}

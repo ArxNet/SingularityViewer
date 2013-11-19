@@ -45,7 +45,6 @@
 
 #include "lluictrl.h"
 #include "v4color.h"
-#include "lldarray.h"
 #include "lldepthstack.h"
 #include "lleditmenuhandler.h"
 #include "llfontgl.h"

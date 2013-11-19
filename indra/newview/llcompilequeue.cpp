@@ -617,18 +617,18 @@ LLFloaterNotRunQueue::~LLFloaterNotRunQueue()
 void LLFloaterCompileQueue::removeItemByItemID(const LLUUID& asset_id)
 {
 	llinfos << "LLFloaterCompileQueue::removeItemByAssetID()" << llendl;
-	for (S32 i = 0; i < mCurrentScripts.count();)
+	for (std::size_t i = 0; i < mCurrentScripts.size();)
 	{
-		if (asset_id == mCurrentScripts.get(i)->getUUID())
+		if (asset_id == mCurrentScripts.at(i)->getUUID())
 		{
-			mCurrentScripts.remove(i);
+			mCurrentScripts.erase(mCurrentScripts.begin() + i);
 		}
 		else
 		{
 			++i;
 		}
 	}
-	if (mCurrentScripts.count() == 0)
+	if (mCurrentScripts.size() == 0)
 	{
 		nextObject();
 	}

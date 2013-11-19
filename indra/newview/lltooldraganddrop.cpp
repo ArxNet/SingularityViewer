@@ -433,16 +433,16 @@ void LLToolDragAndDrop::beginDrag(EDragAndDropType type,
 				items,
 				LLInventoryModel::EXCLUDE_TRASH,
 				is_not_preferred);
-			S32 count = cats.count();
+			S32 count = cats.size();
 			S32 i;
 			for(i = 0; i < count; ++i)
 			{
-				folder_ids.push_back(cats.get(i)->getUUID());
+				folder_ids.push_back(cats.at(i)->getUUID());
 			}
-			count = items.count();
+			count = items.size();
 			for(i = 0; i < count; ++i)
 			{
-				item_ids.push_back(items.get(i)->getUUID());
+				item_ids.push_back(items.at(i)->getUUID());
 			}
 			if(!folder_ids.empty() || !item_ids.empty())
 			{
@@ -504,7 +504,7 @@ void LLToolDragAndDrop::beginMultiDrag(
 					items,
 					LLInventoryModel::EXCLUDE_TRASH,
 					is_not_preferred);
-				S32 cat_count = cats.count();
+				S32 cat_count = cats.size();
 				for(S32 i = 0; i < cat_count; ++i)
 				{
 					cat_ids.insert(cat->getUUID());
@@ -2341,7 +2341,7 @@ EAcceptance LLToolDragAndDrop::dad3dUpdateInventoryCategory(
 					items,
 					LLInventoryModel::EXCLUDE_TRASH,
 					droppable);
-	cats.put(cat);
+	cats.push_back(cat);
  	if(droppable.countNoCopy() > 0)
  	{
  		llwarns << "*** Need to confirm this step" << llendl;

@@ -252,7 +252,7 @@ namespace
 							asset_id_matches);
 
 			// See if any of the inventory items matching this sculpt id are exportable
-			for (S32 i = 0; i < items.count(); i++)
+			for (std::size_t i = 0; i < items.size(); i++)
 			{
 				const LLPermissions item_permissions = items[i]->getPermissions();
 				if (item_permissions.allowExportBy(gAgentID, LFSimFeatureHandler::instance().exportPolicy()))

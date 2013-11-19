@@ -1044,10 +1044,10 @@ void LLFloaterWorldMap::buildLandmarkIDLists()
 
 	std::sort(items.begin(), items.end(), LLViewerInventoryItem::comparePointers());
 	
-	S32 count = items.count();
+	S32 count = items.size();
 	for(S32 i = 0; i < count; ++i)
 	{
-		LLInventoryItem* item = items.get(i);
+		LLInventoryItem* item = items.at(i);
 
 		list->addSimpleElement(item->getName(), ADD_BOTTOM, item->getUUID());
 

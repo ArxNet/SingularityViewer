@@ -31,9 +31,10 @@
 #include "linden_common.h"
 #include "aifetchinventoryfolder.h"
 #include "aievent.h"
-#include "llagent.h"
+#include "llinventorymodel.h"
 #include "llinventoryobserver.h"
 #include "llinventorymodelbackgroundfetch.h"
+#include "llviewerinventory.h"
 
 enum fetchinventoryfolder_state_type {
   AIFetchInventoryFolder_checkFolderExists = AIStateMachine::max_state,
@@ -135,9 +136,9 @@ void AIFetchInventoryFolder::multiplex_impl(state_type run_state)
 		// Look up UUID by name.
 		LLInventoryModel::cat_array_t* categories;
 		gInventory.getDirectDescendentsOf(mParentFolder, categories);
-		for (S32 i = 0; i < categories->getLength(); ++i)
+		for (std::size_t i = 0; i < categories->size(); ++i)
 		{
-		  LLPointer<LLViewerInventoryCategory> const& category(categories->get(i));
+		  LLPointer<LLViewerInventoryCategory> const& category(categories->at(i));
 		  if (category->getName() == mFolderName)
 		  {
 			mFolderUUID = category->getUUID();

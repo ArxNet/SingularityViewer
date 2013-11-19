@@ -437,9 +437,9 @@ LLUUID LLObjectBackup::validateTextureID(LLUUID asset_id)
 							LLInventoryModel::INCLUDE_TRASH,
 							asset_id_matches);
 
-	if (items.count())
+	if (items.size())
 	{
-		for (S32 i = 0; i < items.count(); i++)
+		for (std::size_t i = 0; i < items.size(); i++)
 		{
 			const LLPermissions item_permissions = items[i]->getPermissions();
 			if (validatePerms(&item_permissions))

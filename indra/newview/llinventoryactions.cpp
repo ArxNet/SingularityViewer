@@ -480,7 +480,7 @@ class LLBeginIMSession : public inventory_panel_listener_t
 												item_array,
 												LLInventoryModel::EXCLUDE_TRASH,
 												is_buddy);
-					S32 count = item_array.count();
+					S32 count = item_array.size();
 					if(count > 0)
 					{
 						// create the session
@@ -490,7 +490,7 @@ class LLBeginIMSession : public inventory_panel_listener_t
 						LLUUID id;
 						for(S32 i = 0; i < count; ++i)
 						{
-							id = item_array.get(i)->getCreatorUUID();
+							id = item_array.at(i)->getCreatorUUID();
 							if(at.isBuddyOnline(id))
 							{
 								members.put(id);
