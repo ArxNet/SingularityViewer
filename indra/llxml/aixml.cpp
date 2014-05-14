@@ -27,6 +27,7 @@
  *   30/07/2013
  *   Initial version, written by Aleric Inglewood @ SL
  */
+#include "linden_common.h"
 
 #include "sys.h"
 #include "aixml.h"

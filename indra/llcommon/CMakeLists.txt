@@ -181,7 +181,6 @@ set(llcommon_HEADER_FILES
     llformat.h
     llframetimer.h
     llhandle.h
-    llhash.h
     llheartbeat.h
     llhttpstatuscodes.h
     llindexedqueue.h

@@ -80,6 +80,7 @@
  * which only has access to the server object. The server then is removed from the list
  * by searching through it for the pointer to the server.
  */
+#include "linden_common.h"
 
 #include "sys.h"
 #include "aisyncclient.h"

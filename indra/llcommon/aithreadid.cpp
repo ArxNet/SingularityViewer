@@ -26,6 +26,7 @@
  *   08/08/2012
  *   - Initial version, written by Aleric Inglewood @ SL
  */
+#include "linden_common.h"
 
 #include <iostream>
 #include <iomanip>

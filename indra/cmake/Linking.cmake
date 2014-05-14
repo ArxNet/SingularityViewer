@@ -19,12 +19,13 @@ if (NOT STANDALONE)
     set(ARCH_PREBUILT_LINK_DIRS ${ARCH_PREBUILT_DIRS}/${CMAKE_BUILD_TYPE_LOWER})
   endif(WINDOWS OR ${CMAKE_GENERATOR} MATCHES "Xcode")
 
-  if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+  string(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_LOWER)
+  if (NOT "${BUILD_TYPE_LOWER}" STREQUAL "release")
     # When we're building something other than Release, append the
     # packages/lib/release directory to deal with autobuild packages that don't
     # provide (e.g.) lib/debug libraries.
     list(APPEND ARCH_PREBUILT_LINK_DIRS ${ARCH_PREBUILT_DIRS_RELEASE})
-  endif (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+  endif (NOT "${BUILD_TYPE_LOWER}" STREQUAL "release")
 endif (NOT STANDALONE)
 
 link_directories(${ARCH_PREBUILT_LINK_DIRS})

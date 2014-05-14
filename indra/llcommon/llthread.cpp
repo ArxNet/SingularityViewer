@@ -23,12 +23,13 @@
  * $/LicenseInfo$
  */
 
-#if LL_GNUC
+#if defined(__GNUG__) && !defined(__clang__) && !defined(__ICC)
 // Generate code for inlines from llthread.h (needed for is_main_thread()).
 #pragma implementation "llthread.h"
 #endif
 
 #include "linden_common.h"
+
 #include "llapr.h"
 
 #include "apr_portable.h"

@@ -1,4 +1,5 @@
 // <edit>
+#include "linden_common.h"
 #include "llmessagelog.h"
 
 LLMessageLogEntry::LLMessageLogEntry(EType type, LLHost from_host, LLHost to_host, U8* data, S32 data_size)

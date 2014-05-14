@@ -26,11 +26,11 @@
 
 #include "linden_common.h"
 
-#include "llhash.h"
-
 #include "llmessagethrottle.h"
 #include "llframetimer.h"
 #include "fix_macros.h"
+
+#include <boost/functional/hash.hpp>
 
 // This is used for the stl search_n function.
 #if _MSC_VER >= 1500 // VC9 has a bug in search_n
@@ -115,7 +115,7 @@ BOOL LLMessageThrottle::addViewerAlert(const LLUUID& to, const std::string& mesg
 	full_mesg << to << mesg;
 
 	// Create an entry for this message.
-	size_t hash = llhash(full_mesg.str().c_str());
+	size_t hash = boost::hash<std::string>()(full_mesg.str());
 	LLMessageThrottleEntry entry(hash, LLFrameTimer::getTotalTime());
 
 	// Check if this message is already in the list.
@@ -149,7 +149,7 @@ BOOL LLMessageThrottle::addAgentAlert(const LLUUID& agent, const LLUUID& task, c
 	full_mesg << agent << task << mesg;
 
 	// Create an entry for this message.
-	size_t hash = llhash(full_mesg.str().c_str());
+	size_t hash = boost::hash<std::string>()(full_mesg.str());
 	LLMessageThrottleEntry entry(hash, LLFrameTimer::getTotalTime());
 
 	// Check if this message is already in the list.

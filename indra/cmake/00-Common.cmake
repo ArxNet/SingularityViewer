@@ -15,7 +15,7 @@ set(CMAKE_CXX_FLAGS_RELEASE
     "-DLL_RELEASE=1 -DLL_RELEASE_FOR_DOWNLOAD=1 -D_SECURE_SCL=0 -DNDEBUG")
 set(CMAKE_C_FLAGS_RELEASE
     "${CMAKE_CXX_FLAGS_RELEASE}")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO
     "-DLL_RELEASE=1 -D_SECURE_SCL=0 -DNDEBUG -DLL_RELEASE_WITH_DEBUG_INFO=1")
 
 # Configure crash reporting
@@ -64,7 +64,7 @@ if (WINDOWS)
 
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /Zi /MDd /MP"
       CACHE STRING "C++ compiler debug options" FORCE)
-  set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
+  set(CMAKE_CXX_FLAGS_RELWITHDEBINFO
       "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Od /Zi /MD /MP"
       CACHE STRING "C++ compiler release-with-debug options" FORCE)
   set(CMAKE_CXX_FLAGS_RELEASE
@@ -81,17 +81,17 @@ if (WINDOWS)
   add_definitions(
       /DLL_WINDOWS=1
       /DUNICODE
-      /D_UNICODE 
+      /D_UNICODE
       /GS
       /TP
       /W3
       /c
       /Zc:forScope
-	    /Zc:wchar_t-
+      /Zc:wchar_t-
       /nologo
       /Oy-
       )
-  
+
   # SSE2 is implied on win64
   if(WORD_SIZE EQUAL 32)
     add_definitions(/arch:SSE2)
@@ -114,8 +114,6 @@ if (WINDOWS)
 
 endif (WINDOWS)
 
-set (GCC_EXTRA_OPTIMIZATIONS "-ffast-math")
-
 if (LINUX)
   set(CMAKE_SKIP_RPATH TRUE)
 
@@ -124,20 +122,22 @@ if (LINUX)
       -DAPPID=secondlife
       -D_REENTRANT
       -fexceptions
-      -fno-math-errno
-      -fno-strict-aliasing
-      -fsigned-char
       -fvisibility=hidden
       -g
       -pthread
       )
 
-  set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 ")
-
   # Don't catch SIGCHLD in our base application class for the viewer
   # some of our 3rd party libs may need their *own* SIGCHLD handler to work.  Sigh!
   # The viewer doesn't need to catch SIGCHLD anyway.
   add_definitions(-DLL_IGNORE_SIGCHLD)
+
+  string( TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_LOWER)
+  if("${BUILD_TYPE_LOWER}" STREQUAL "release")
+    add_definitions(-D_FORTIFY_SOURCE=2)
+  endif("${BUILD_TYPE_LOWER}" STREQUAL "release")
+
+  set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 ")
 
   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     find_program(GXX g++)
@@ -167,25 +167,31 @@ if (LINUX)
         OUTPUT_VARIABLE CXX_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-    #Lets actually get a numerical version of gxx's version
-    STRING(REGEX REPLACE ".* ([0-9])\\.([0-9])\\.([0-9]).*" "\\1\\2\\3" CXX_VERSION ${CXX_VERSION})
+    # Lets actually get a numerical version of gxx's version
+    STRING(REGEX REPLACE ".* ([0-9])\\.([0-9])\\.([0-9]).*" "\\1\\2\\3" CXX_VERSION_NUMBER ${CXX_VERSION})
 
-    #gcc 4.3 and above doesn't like the LL boost
-    if(${CXX_VERSION} GREATER 429)
+    #gcc 4.3 warning supressions
+    if(${CXX_VERSION_NUMBER} GREATER 429)
       add_definitions(-Wno-parentheses)
-    endif (${CXX_VERSION} GREATER 429)
+    endif (${CXX_VERSION_NUMBER} GREATER 429)
 
-    #gcc 4.6 has a new spammy warning
-    if(NOT ${CXX_VERSION} LESS 460)
+    #gcc 4.6 warning supressions
+    if(NOT ${CXX_VERSION_NUMBER} LESS 460)
       add_definitions(-Wno-unused-but-set-variable)
-    endif (NOT ${CXX_VERSION} LESS 460)
+    endif (NOT ${CXX_VERSION_NUMBER} LESS 460)
 
-    #gcc 4.8 boost spam wall
-    if(NOT ${CXX_VERSION} LESS 480)
+    #gcc 4.8 warning supressions
+    if(NOT ${CXX_VERSION_NUMBER} LESS 480)
       add_definitions(-Wno-unused-local-typedefs)
-    endif (NOT ${CXX_VERSION} LESS 480)
+    endif (NOT ${CXX_VERSION_NUMBER} LESS 480)
 
     # End of hacks.
+
+    add_definitions(
+        -fno-math-errno
+        -fno-strict-aliasing
+        -fsigned-char
+        )
 
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 
@@ -193,60 +199,68 @@ if (LINUX)
       # this stops us requiring a really recent glibc at runtime
       add_definitions(-fno-stack-protector)
     endif (NOT STANDALONE)
+
     if (${ARCH} STREQUAL "x86_64")
-      add_definitions(-DLINUX64=1 -pipe)
-      set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fomit-frame-pointer -ffast-math -funroll-loops")
-      set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fomit-frame-pointer -ffast-math -funroll-loops")
-      set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -ffast-math")
-      set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} -ffast-math")
+      add_definitions(-pipe)
+      set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ffast-math -funroll-loops ${CMAKE_CXX_FLAGS_RELEASE}")
+      set(CMAKE_C_FLAGS_RELEASE "-O3 -ffast-math -funroll-loops ${CMAKE_C_FLAGS_RELEASE}")
+      set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -ffast-math ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
+      set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O3 -ffast-math ${CMAKE_C_FLAGS_RELWITHDEBINFO}")
     else (${ARCH} STREQUAL "x86_64")
       if (NOT STANDALONE)
-        set(MARCH_FLAG " -march=pentium4")
+        add_definitions(-march=pentium4)
       endif (NOT STANDALONE)
-      set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}${MARCH_FLAG} -fno-inline -msse2")
-      set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}${MARCH_FLAG} -fno-inline -msse2")
-      set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}${MARCH_FLAG} -mfpmath=sse,387 -msse2 ${GCC_EXTRA_OPTIMIZATIONS}")
-      set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}${MARCH_FLAG} -mfpmath=sse,387 -msse2 ${GCC_EXTRA_OPTIMIZATIONS}")
-      set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}${MARCH_FLAG} -mfpmath=sse,387 -msse2 ${GCC_EXTRA_OPTIMIZATIONS}")
-      set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO}${MARCH_FLAG} -mfpmath=sse,387 -msse2 ${GCC_EXTRA_OPTIMIZATIONS}")
+      set(CMAKE_CXX_FLAGS_DEBUG "-O0 -fno-inline -msse2 ${CMAKE_CXX_FLAGS_DEBUG}")
+      set(CMAKE_C_FLAGS_DEBUG "-O0 -fno-inline -msse2 ${CMAKE_CXX_FLAGS_DEBUG}")
+      set(CMAKE_CXX_FLAGS_RELEASE "-O3 -mfpmath=sse,387 -msse2 -ffast-math ${CMAKE_CXX_FLAGS_RELEASE}")
+      set(CMAKE_C_FLAGS_RELEASE "-O3  -mfpmath=sse,387 -msse2 -ffast-math ${CMAKE_C_FLAGS_RELEASE}")
+      set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -mfpmath=sse,387 -msse2 -ffast-math ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
+      set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O3 -mfpmath=sse,387 -msse2 -ffast-math ${CMAKE_C_FLAGS_RELWITHDEBINFO}")
     endif (${ARCH} STREQUAL "x86_64")
   elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    add_definitions(
+        -fno-math-errno
+        -msse2
+        )
+
+    if (WORD_SIZE EQUAL 32)
+      add_definitions(-march=pentium4)
+    endif (WORD_SIZE EQUAL 32)
+
     if (NOT STANDALONE)
       # this stops us requiring a really recent glibc at runtime
       add_definitions(-fno-stack-protector)
     endif (NOT STANDALONE)
 
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}${MARCH_FLAG} -fno-inline -msse2")
-    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}${MARCH_FLAG} -fno-inline -msse2")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}${MARCH_FLAG} -msse2")
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}${MARCH_FLAG} -msse2")
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}${MARCH_FLAG} -msse2")
-    set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO}${MARCH_FLAG} -msse2")
+
+    set(CMAKE_CXX_FLAGS_DEBUG "-O0 -fno-inline ${CMAKE_CXX_FLAGS_DEBUG}")
+    set(CMAKE_C_FLAGS_DEBUG "-O0 -fno-inline ${CMAKE_CXX_FLAGS_DEBUG}")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 ${CMAKE_CXX_FLAGS_RELEASE}")
+    set(CMAKE_C_FLAGS_RELEASE "-O3 ${CMAKE_C_FLAGS_RELEASE}")
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
+    set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O3 ${CMAKE_C_FLAGS_RELWITHDEBINFO}")
   elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+    add_definitions(
+        -fno-math-errno
+        -msse2
+        )
+
+    if (NOT STANDALONE)
+      add_definitions(-march=pentium4)
+    endif (NOT STANDALONE)
 
     if (NOT STANDALONE)
       # this stops us requiring a really recent glibc at runtime
       add_definitions(-fno-stack-protector)
     endif (NOT STANDALONE)
 
-    if (NOT STANDALONE)
-      set(MARCH_FLAG " -axsse4.1 -msse2")
-    endif (NOT STANDALONE)
-
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}${MARCH_FLAG} -fno-inline-functions")
-    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}${MARCH_FLAG} -fno-inline-functions")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}${MARCH_FLAG} -parallel -fp-model fast=1")
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}${MARCH_FLAG} -parallel -fp-model fast=1")
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}${MARCH_FLAG} -parallel -fp-model fast=1")
-    set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO}${MARCH_FLAG} -parallel -fp-model fast=1")
-  endif()
-
-  set(CMAKE_CXX_FLAGS_DEBUG "-O0 ${CMAKE_CXX_FLAGS_DEBUG}")
-  set(CMAKE_C_FLAGS_DEBUG "-O0 ${CMAKE_CXX_FLAGS_DEBUG}")
-  set(CMAKE_CXX_FLAGS_RELEASE "-O3 ${CMAKE_CXX_FLAGS_RELEASE}")
-  set(CMAKE_C_FLAGS_RELEASE "-O3 ${CMAKE_C_FLAGS_RELEASE}")
-  set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
-  set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O3 ${CMAKE_C_FLAGS_RELWITHDEBINFO}")  
+    set(CMAKE_CXX_FLAGS_DEBUG "-O0 -fno-inline-functions ${CMAKE_CXX_FLAGS_DEBUG}")
+    set(CMAKE_C_FLAGS_DEBUG "-O0 -fno-inline-functions ${CMAKE_CXX_FLAGS_DEBUG}")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O2 -fp-model fast=1 ${CMAKE_CXX_FLAGS_RELEASE}")
+    set(CMAKE_C_FLAGS_RELEASE "-O2 -fp-model fast=1 ${CMAKE_C_FLAGS_RELEASE}")
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -fp-model fast=1 ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
+    set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -fp-model fast=1 ${CMAKE_C_FLAGS_RELWITHDEBINFO}")
+  endif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 endif (LINUX)
 
 
@@ -272,28 +286,25 @@ if (DARWIN)
 endif (DARWIN)
 
 
-
 if (LINUX OR DARWIN)
-  if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    add_definitions(-DLL_GNUC=1)
-    set(UNIX_WARNINGS "-Wall -Wno-sign-compare -Wno-trigraphs")
-    set(UNIX_CXX_WARNINGS "${UNIX_WARNINGS} -Wno-reorder -Wno-non-virtual-dtor -Woverloaded-virtual")
-  elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    add_definitions(-DLL_CLANG=1)
-    set(UNIX_WARNINGS "-Wall -Wno-sign-compare -Wno-trigraphs -Wno-tautological-compare -Wno-char-subscripts -Wno-gnu -Wno-logical-op-parentheses -Wno-logical-not-parentheses -Wno-non-virtual-dtor -Wno-deprecated")
-    set(UNIX_WARNINGS "${UNIX_WARNINGS} -Woverloaded-virtual -Wno-parentheses-equality -Wno-reorder -Wno-unused-function -Wno-unused-value -Wno-unused-variable -Wno-unused-private-field -Wno-parentheses")
-    set(UNIX_CXX_WARNINGS "${UNIX_WARNINGS}")
-  elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
-    add_definitions(-DLL_ICC=1)
-  endif ()
-  
   if (NOT DISABLE_FATAL_WARNINGS)
-    set(UNIX_WARNINGS "${UNIX_WARNINGS} -Werror")
-    set(UNIX_CXX_WARNINGS "${UNIX_CXX_WARNINGS} -Werror")
+    set(UNIX_WARNINGS "-Werror")
   endif (NOT DISABLE_FATAL_WARNINGS)
+
+  if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    set(UNIX_WARNINGS "-Wall -Wno-sign-compare -Wno-trigraphs ${UNIX_WARNINGS}")
+    set(UNIX_CXX_WARNINGS "${UNIX_WARNINGS} -Wno-reorder")
+  elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(UNIX_WARNINGS "-Wall -Wno-sign-compare -Wno-trigraphs ${UNIX_WARNINGS}")
+    set(UNIX_CXX_WARNINGS "${UNIX_WARNINGS} -Wno-reorder -Wno-unused-const-variable -Wno-format-extra-args -Wno-unused-private-field -Wno-unused-function -Wno-tautological-compare -Wno-empty-body -Wno-unused-variable -Wno-unused-value")
+  elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+    set(UNIX_WARNINGS "-w2 -diag-disable remark -wd68 -wd597 -wd780 -wd858 ${UNIX_WARNINGS}")
+    set(UNIX_CXX_WARNINGS "${UNIX_WARNINGS}")
+  endif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
   set(CMAKE_C_FLAGS "${UNIX_WARNINGS} ${CMAKE_C_FLAGS}")
   set(CMAKE_CXX_FLAGS "${UNIX_CXX_WARNINGS} ${CMAKE_CXX_FLAGS}")
+
   if (WORD_SIZE EQUAL 32)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")

@@ -29,6 +29,7 @@
  *   05/11/2013
  *   Moved everything in namespace AIAlert, except AIArgs.
  */
+#include "linden_common.h"
 
 #include "aialert.h"
 
